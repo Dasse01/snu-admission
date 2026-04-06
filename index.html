@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- ═══ Open Graph / SNS 미리보기 ═══ -->
+<meta property="og:type"        content="website" />
+<meta property="og:site_name"   content="시대학원 AI입시연구소" />
+<meta property="og:title"       content="명문대 합격생 생기부 대공개 | 시대학원 AI입시연구소" />
+<meta property="og:description" content="서울대·연세대·고려대·성균관대 합격생 12명의 실제 학생부를 그대로 공개합니다. 5편의 심층 분석 보고서로 서울대 학종의 본질을 완전히 밝힙니다." />
+<meta property="og:image"       content="https://[GitHub_Username].github.io/[Repo_Name]/og.png" />
+<meta property="og:image:width"  content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:url"         content="https://[GitHub_Username].github.io/[Repo_Name]/" />
+<meta property="og:locale"      content="ko_KR" />
+
+<!-- ═══ Twitter Card ═══ -->
+<meta name="twitter:card"        content="summary_large_image" />
+<meta name="twitter:title"       content="명문대 합격생 생기부 대공개 | 시대학원 AI입시연구소" />
+<meta name="twitter:description" content="서울대·연세대·고려대·성균관대 합격생 12명의 실제 학생부를 그대로 공개합니다." />
+<meta name="twitter:image"       content="https://[GitHub_Username].github.io/[Repo_Name]/og.png" />
+
+<!-- ═══ SEO / 검색 최적화 ═══ -->
+<meta name="description"  content="서울대·연세대·고려대·성균관대 합격생 12명의 실제 학생부를 그대로 공개합니다. 5편의 심층 분석 보고서로 서울대 학종의 본질을 완전히 밝힙니다." />
+<meta name="keywords"     content="서울대입시, 학생부종합전형, 합격생 생기부, 학종 전략, 수시합격, 세특관리, 입시컨설팅, 시대학원" />
+<meta name="author"       content="김휘창 · 시대학원 AI입시연구소" />
+<meta name="robots"       content="index, follow" />
+
+<!-- ═══ 카카오톡 공유 ═══ -->
+<meta property="kakao:og:title"       content="명문대 합격생 생기부 대공개" />
+<meta property="kakao:og:description" content="서울대·연세대·고려대 합격생의 실제 학생부를 공개합니다" />
+<meta property="kakao:og:image"       content="https://[GitHub_Username].github.io/[Repo_Name]/og.png" />
+
+<!-- ═══ Canonical URL ═══ -->
+<link rel="canonical" href="https://[GitHub_Username].github.io/[Repo_Name]/" />
+
+<title>서울대 합격 비결 심층 분석 시리즈 | 시대학원 AI입시연구소</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700;900&family=Noto+Sans+KR:wght@300;400;500;700&family=DM+Mono:wght@400;500&family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:    #04090F;
+  --bg2:   #07101A;
+  --bg3:   #0C1826;
+  --ivory: #EEF0F8;
+  --ivD:   #8A94B0;
+  --muted: #3A4860;
+  --c1:#C8970A;--c1L:#F5C842;
+  --c2:#2D6A4F;--c2L:#95D5B2;
+  --c3:#4338CA;--c3L:#A78BFA;
+  --c4:#B5621E;--c4L:#E8B040;
+  --c5:#0369A1;--c5L:#67E8F9;
+  --gold:#C8970A;--goldL:#F5C842;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  background:var(--bg);color:var(--ivory);
+  font-family:'Noto Sans KR',sans-serif;
+  line-height:1.75;overflow-x:hidden;
+}
+
+/* ── 3D 캔버스 — hero 영역에만 ── */
+#waveCanvas{
+  position:absolute;inset:0;z-index:0;
+  width:100%;height:100%;
+  pointer-events:none;
+  display:block;
+}
+/* 좌표 트래커 */
+#coordTracker{
+  position:fixed;z-index:10;
+  pointer-events:none;
+  font-family:'DM Mono',monospace;
+  font-size:11px;color:var(--goldL);
+  background:rgba(4,9,15,0.75);
+  border:1px solid rgba(200,151,10,0.35);
+  padding:5px 10px;border-radius:6px;
+  opacity:0;transition:opacity .2s;
+  letter-spacing:.5px;
+}
+/* 프로그레스 바 */
+#prog{
+  position:fixed;top:0;left:0;z-index:300;
+  height:3px;width:0%;
+  background:linear-gradient(90deg,var(--c1),var(--c5L),var(--c3L),var(--goldL));
+  transition:width .1s;
+}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 2.5rem;height:62px;
+  background:rgba(4,9,15,0.88);
+  backdrop-filter:blur(22px);
+  border-bottom:1px solid rgba(200,151,10,0.12);
+}
+.nav-brand{
+  font-family:'Noto Serif KR',serif;font-size:14px;font-weight:700;
+  color:var(--goldL);display:flex;align-items:center;gap:8px;
+}
+.nav-brand::before{content:'◈';color:var(--c5L);font-size:15px;}
+.nav-links{display:flex;gap:1.5rem;}
+.nav-links a{font-size:11px;color:var(--muted);text-decoration:none;letter-spacing:.5px;transition:color .2s;}
+.nav-links a:hover{color:var(--ivory);}
+.nav-cta{
+  padding:6px 16px;border-radius:99px;
+  background:linear-gradient(135deg,var(--gold),#D05020);
+  color:var(--bg);font-size:12px;font-weight:700;
+  text-decoration:none;transition:opacity .2s;
+}
+.nav-cta:hover{opacity:.85;}
+
+/* ── HERO ── */
+.hero{
+  position:relative;z-index:1;
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;
+  padding:9rem 2rem 5rem;
+  overflow:hidden;
+  background:var(--bg);
+}
+/* 하단 페이드 — 파동이 콘텐츠 영역으로 번지지 않게 */
+.hero::after{
+  content:'';
+  position:absolute;bottom:0;left:0;right:0;
+  height:140px;
+  background:linear-gradient(transparent,var(--bg));
+  pointer-events:none;z-index:2;
+}
+/* 좌하단 좌표 HUD */
+.coord-hud{
+  position:absolute;bottom:2.5rem;left:3rem;
+  font-family:'DM Mono',monospace;font-size:11px;
+  color:rgba(103,232,249,.5);letter-spacing:1px;
+  line-height:1.8;text-align:left;z-index:3;
+}
+.coord-hud .hud-title{
+  color:rgba(200,151,10,.55);font-size:10px;
+  letter-spacing:2px;text-transform:uppercase;
+  margin-bottom:.25rem;
+}
+/* 우하단 LIVE 뱃지 */
+.wave-live{
+  position:absolute;bottom:2.5rem;right:3rem;
+  font-family:'DM Mono',monospace;font-size:10px;
+  color:rgba(103,232,249,.55);letter-spacing:2px;
+  display:flex;align-items:center;gap:.5rem;z-index:3;
+}
+.wave-live::before{
+  content:'';width:6px;height:6px;border-radius:50%;
+  background:var(--c5L);
+  animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:.4;}50%{opacity:1;}}
+
+.hero-content{position:relative;z-index:3;display:flex;flex-direction:column;align-items:center;}
+
+.hero-kicker{
+  font-family:'DM Mono',monospace;font-size:11px;letter-spacing:4px;text-transform:uppercase;
+  color:var(--goldL);margin-bottom:1.5rem;
+  display:flex;align-items:center;gap:.75rem;
+}
+.hero-kicker::before,.hero-kicker::after{content:'';display:block;width:28px;height:1px;background:var(--goldL);}
+.hero-title{
+  font-family:'Noto Serif KR',serif;
+  font-size:clamp(30px,5.5vw,68px);font-weight:900;line-height:1.12;
+  color:var(--ivory);margin-bottom:1.25rem;
+}
+.hero-title .glow{
+  color:var(--goldL);
+  text-shadow:0 0 40px rgba(200,151,10,.35);
+}
+.hero-sub{
+  font-size:clamp(14px,1.7vw,17px);color:var(--ivD);
+  max-width:660px;line-height:1.85;margin-bottom:2.5rem;
+}
+.theme-row{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center;margin-bottom:2.5rem;}
+.tpill{
+  padding:4px 13px;border-radius:99px;font-family:'DM Mono',monospace;
+  font-size:10px;letter-spacing:.5px;border:1px solid;
+}
+.tpill:nth-child(1){border-color:rgba(200,151,10,.4);color:var(--c1L);}
+.tpill:nth-child(2){border-color:rgba(45,106,79,.4);color:var(--c2L);}
+.tpill:nth-child(3){border-color:rgba(67,56,202,.4);color:var(--c3L);}
+.tpill:nth-child(4){border-color:rgba(181,98,30,.4);color:var(--c4L);}
+.tpill:nth-child(5){border-color:rgba(3,105,161,.4);color:var(--c5L);}
+.cta-row{display:flex;gap:.9rem;flex-wrap:wrap;justify-content:center;}
+.btn{
+  padding:13px 28px;border-radius:12px;font-size:13px;font-weight:700;
+  text-decoration:none;transition:all .25s;display:inline-flex;align-items:center;gap:.4rem;
+}
+.btn.pri{background:linear-gradient(135deg,var(--gold),#D05020);color:var(--bg);}
+.btn.pri:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(200,151,10,.3);}
+.btn.sec{border:1px solid rgba(255,255,255,.15);color:var(--ivD);background:rgba(255,255,255,.04);}
+.btn.sec:hover{border-color:rgba(255,255,255,.3);color:var(--ivory);}
+.hero-scroll{
+  position:absolute;bottom:3rem;left:50%;transform:translateX(-50%);
+  z-index:3;
+  display:flex;flex-direction:column;align-items:center;gap:.4rem;
+  font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:2px;
+  animation:bob 2.5s ease-in-out infinite;
+}
+.hero-scroll::after{content:'';display:block;width:1px;height:38px;background:linear-gradient(var(--goldL),transparent);}
+@keyframes bob{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(7px);}}
+
+/* ── STATS ── */
+.stats-bar{
+  position:relative;z-index:1;
+  background:var(--bg2);
+  border-top:1px solid rgba(255,255,255,.055);
+  border-bottom:1px solid rgba(255,255,255,.055);
+  padding:2.25rem 2rem;
+}
+.stats-inner{max-width:1120px;margin:0 auto;display:flex;justify-content:center;flex-wrap:wrap;}
+.st{flex:1;min-width:140px;max-width:190px;text-align:center;padding:0 1.75rem;border-right:1px solid rgba(255,255,255,.06);}
+.st:last-child{border-right:none;}
+.sn{
+  font-family:'Cinzel',serif;font-size:2.2rem;font-weight:700;
+  background:linear-gradient(135deg,var(--goldL),var(--c5L));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;display:block;line-height:1;margin-bottom:.35rem;
+}
+.sl{font-size:11px;color:var(--muted);letter-spacing:.5px;}
+
+/* ── 보고서 섹션 ── */
+.reports-wrap{
+  position:relative;z-index:1;
+  background:var(--bg);
+  max-width:1180px;margin:0 auto;padding:5.5rem 2rem 6rem;
+}
+.sec-eye{
+  text-align:center;font-family:'DM Mono',monospace;
+  font-size:11px;letter-spacing:4px;text-transform:uppercase;
+  color:var(--c5L);margin-bottom:.75rem;
+}
+.sec-ttl{
+  text-align:center;font-family:'Noto Serif KR',serif;
+  font-size:clamp(22px,3.5vw,40px);font-weight:900;
+  color:var(--ivory);margin-bottom:.65rem;
+}
+.sec-sub{
+  text-align:center;font-size:14px;color:var(--muted);
+  max-width:580px;margin:0 auto 3.5rem;line-height:1.8;
+}
+
+/* ── 카드 공통 ── */
+.rcard{
+  background:rgba(7,16,26,0.9);
+  border-radius:20px;overflow:hidden;
+  border:1px solid rgba(255,255,255,.07);
+  display:flex;flex-direction:column;
+  transition:transform .35s cubic-bezier(.22,.68,0,1.2),
+              box-shadow .35s,border-color .35s;
+  opacity:0;transform:translateY(26px);
+  backdrop-filter:blur(8px);
+}
+.rcard.vis{animation:riseC .6s cubic-bezier(.22,.68,0,1.2) forwards;}
+@keyframes riseC{to{opacity:1;transform:translateY(0);}}
+.rcard:hover{transform:translateY(-6px);}
+
+/* 카드 헤더 */
+.ch{padding:1.75rem 2rem 1.4rem;position:relative;overflow:hidden;}
+.ch-glow{
+  position:absolute;top:-40px;right:-40px;
+  width:150px;height:150px;border-radius:50%;
+  opacity:.14;filter:blur(40px);pointer-events:none;
+}
+.cn{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:3px;text-transform:uppercase;margin-bottom:.6rem;display:block;}
+.ci{font-size:32px;display:block;margin-bottom:.65rem;line-height:1;}
+.ct{font-family:'Noto Serif KR',serif;font-size:clamp(16px,2vw,21px);font-weight:700;color:var(--ivory);margin-bottom:.35rem;line-height:1.25;}
+.cd{font-size:11.5px;font-family:'DM Mono',monospace;letter-spacing:.5px;margin-bottom:.65rem;}
+.cq{
+  font-size:12.5px;color:var(--ivD);font-style:italic;line-height:1.65;
+  padding-left:.75rem;border-left:2px solid;
+}
+
+/* 카드 바디 */
+.cb{padding:0 2rem 1.6rem;flex:1;display:flex;flex-direction:column;}
+.cf{list-style:none;padding:0;margin-bottom:auto;}
+.cf li{
+  font-size:12px;color:var(--ivD);padding:.3rem 0;
+  border-bottom:1px solid rgba(255,255,255,.045);
+  display:flex;gap:.55rem;align-items:baseline;line-height:1.5;
+}
+.cf li:last-child{border-bottom:none;}
+.cf li::before{content:'→';font-size:11px;flex-shrink:0;}
+.cf li strong{color:var(--ivory);}
+
+/* 카드 푸터 */
+.cfooter{
+  padding:1.1rem 2rem;border-top:1px solid rgba(255,255,255,.06);
+  display:flex;align-items:center;justify-content:space-between;
+}
+.ctag{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--muted);}
+.clink{
+  display:inline-flex;align-items:center;gap:.35rem;
+  padding:7px 16px;border-radius:99px;
+  font-size:11px;font-weight:700;
+  text-decoration:none;transition:all .2s;border:1px solid;
+}
+.clink:hover{transform:translateX(3px);}
+
+/* 테마 컬러 */
+.c1{border-color:rgba(200,151,10,.18);}
+.c1:hover{border-color:rgba(200,151,10,.5);box-shadow:0 20px 55px rgba(200,151,10,.12);}
+.c1 .cn,.c1 .cd{color:var(--c1L);}
+.c1 .cq{border-color:var(--c1);}
+.c1 .cf li::before{color:var(--c1L);}
+.c1 .ch-glow{background:var(--c1);}
+.c1 .clink{border-color:rgba(200,151,10,.4);color:var(--c1L);}
+.c1 .clink:hover{background:rgba(200,151,10,.1);}
+
+.c2{border-color:rgba(45,106,79,.18);}
+.c2:hover{border-color:rgba(45,106,79,.5);box-shadow:0 20px 55px rgba(45,106,79,.12);}
+.c2 .cn,.c2 .cd{color:var(--c2L);}
+.c2 .cq{border-color:var(--c2);}
+.c2 .cf li::before{color:var(--c2L);}
+.c2 .ch-glow{background:var(--c2L);}
+.c2 .clink{border-color:rgba(45,106,79,.4);color:var(--c2L);}
+.c2 .clink:hover{background:rgba(45,106,79,.1);}
+
+.c3{border-color:rgba(67,56,202,.18);}
+.c3:hover{border-color:rgba(67,56,202,.5);box-shadow:0 20px 55px rgba(67,56,202,.12);}
+.c3 .cn,.c3 .cd{color:var(--c3L);}
+.c3 .cq{border-color:var(--c3);}
+.c3 .cf li::before{color:var(--c3L);}
+.c3 .ch-glow{background:var(--c3L);}
+.c3 .clink{border-color:rgba(67,56,202,.4);color:var(--c3L);}
+.c3 .clink:hover{background:rgba(67,56,202,.1);}
+
+.c4{border-color:rgba(181,98,30,.18);}
+.c4:hover{border-color:rgba(181,98,30,.5);box-shadow:0 20px 55px rgba(181,98,30,.12);}
+.c4 .cn,.c4 .cd{color:var(--c4L);}
+.c4 .cq{border-color:var(--c4);}
+.c4 .cf li::before{color:var(--c4L);}
+.c4 .ch-glow{background:var(--c4L);}
+.c4 .clink{border-color:rgba(181,98,30,.4);color:var(--c4L);}
+.c4 .clink:hover{background:rgba(181,98,30,.1);}
+
+.c5{border-color:rgba(3,105,161,.25);}
+.c5:hover{border-color:rgba(3,105,161,.6);box-shadow:0 20px 60px rgba(3,105,161,.18);}
+.c5 .cn,.c5 .cd{color:var(--c5L);}
+.c5 .cq{border-color:var(--c5);}
+.c5 .cf li::before{color:var(--c5L);}
+.c5 .ch-glow{background:var(--c5);}
+.c5 .clink{border-color:rgba(3,105,161,.4);color:var(--c5L);}
+.c5 .clink:hover{background:rgba(3,105,161,.1);}
+
+/* ── 레이아웃 ── */
+/* 상단: 비교분석 1개 풀 너비 */
+.grid-top{margin-bottom:1.25rem;}
+.grid-top .rcard.c5{grid-column:1/-1;}
+
+/* 비교분석 카드 — 가로형 */
+.card-compare{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:0;
+}
+.card-compare .ch{border-right:1px solid rgba(3,105,161,.12);}
+.card-compare .cb{padding-top:1.5rem;}
+
+/* 하단: 2×2 그리드 */
+.grid-bot{
+  display:grid;grid-template-columns:repeat(2,1fr);gap:1.25rem;
+}
+
+/* ── 인사이트 ── */
+.insight-section{
+  position:relative;z-index:1;
+  background:var(--bg2);
+  border-top:1px solid rgba(255,255,255,.06);
+  border-bottom:1px solid rgba(255,255,255,.06);
+  padding:4.5rem 2rem;
+}
+.insight-inner{max-width:1120px;margin:0 auto;}
+.ins-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:2.5rem;}
+.ins-card{
+  background:var(--bg3);border:1px solid rgba(255,255,255,.07);
+  border-radius:14px;padding:1.75rem;
+  opacity:0;transform:translateY(16px);
+}
+.ins-card.vis{animation:riseC .5s ease forwards;}
+.ins-card:nth-child(2){animation-delay:.1s;}
+.ins-card:nth-child(3){animation-delay:.2s;}
+.ins-n{
+  font-family:'Cinzel',serif;font-size:40px;font-weight:700;
+  line-height:1;margin-bottom:.5rem;
+  background:linear-gradient(135deg,var(--goldL),var(--c5L));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.ins-t{font-family:'Noto Serif KR',serif;font-size:16px;font-weight:700;color:var(--ivory);margin-bottom:.6rem;}
+.ins-b{font-size:12.5px;color:var(--ivD);line-height:1.85;}
+.ins-b strong{color:var(--ivory);}
+
+/* ── CTA ── */
+.cta-wrap{
+  position:relative;z-index:1;text-align:center;padding:5.5rem 2rem;
+  background:var(--bg);
+}
+.cta-wrap::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 55% at 50% 50%,rgba(200,151,10,.05) 0%,transparent 70%);
+  pointer-events:none;
+}
+.cta-eye{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--goldL);margin-bottom:1.1rem;position:relative;}
+.cta-t{font-family:'Noto Serif KR',serif;font-size:clamp(22px,3.5vw,42px);font-weight:900;color:var(--ivory);margin-bottom:.9rem;position:relative;}
+.cta-s{font-size:14px;color:var(--ivD);max-width:520px;margin:0 auto 2.25rem;line-height:1.85;position:relative;}
+.cta-badges{display:flex;gap:.75rem;flex-wrap:wrap;justify-content:center;margin-top:1.75rem;}
+.cbadge{padding:4px 12px;border-radius:99px;font-size:10.5px;border:1px solid rgba(255,255,255,.1);color:var(--muted);font-family:'DM Mono',monospace;}
+
+/* ── FOOTER ── */
+footer{
+  position:relative;z-index:1;
+  background:var(--bg2);
+  border-top:1px solid rgba(255,255,255,.07);
+  padding:3rem 2rem;
+}
+.footer-inner{max-width:1120px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr 1fr;gap:2rem;}
+.fb-n{font-family:'Noto Serif KR',serif;font-size:15px;font-weight:700;color:var(--goldL);margin-bottom:.45rem;}
+.fb-s{font-size:12px;color:var(--muted);}
+.fl h4{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:.65rem;}
+.fl a{display:block;font-size:12.5px;color:var(--ivD);text-decoration:none;padding:.28rem 0;transition:color .2s;}
+.fl a:hover{color:var(--ivory);}
+.footer-copy{
+  border-top:1px solid rgba(255,255,255,.07);padding-top:1.25rem;
+  max-width:1120px;margin:.25rem auto 0;
+  font-size:11px;color:var(--muted);
+  display:flex;justify-content:space-between;flex-wrap:wrap;gap:.4rem;
+  font-family:'DM Mono',monospace;
+}
+
+/* ── 반응형 ── */
+@media(max-width:1000px){
+  .card-compare{grid-template-columns:1fr;}
+  .card-compare .ch{border-right:none;border-bottom:1px solid rgba(3,105,161,.12);}
+}
+@media(max-width:760px){
+  .grid-bot{grid-template-columns:1fr;}
+  .ins-grid{grid-template-columns:1fr;}
+  .footer-inner{grid-template-columns:1fr;}
+  nav .nav-links,.nav-cta{display:none;}
+  .stats-inner{flex-wrap:wrap;}
+  .st{border-right:none;border-bottom:1px solid rgba(255,255,255,.06);padding:1rem;}
+  .st:last-child{border-bottom:none;}
+  .coord-hud,.wave-live{display:none;}
+}
+</style>
+</head>
+<body>
+
+<div id="prog"></div>
+<div id="coordTracker"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">시대학원 AI입시연구소</div>
+  <div class="nav-links">
+    <a href="#reports">보고서</a>
+    <a href="#insights">인사이트</a>
+    <a href="서울대_합격생_비교분석.html">비교분석</a>
+  </div>
+  <a href="https://ipsiai.com" target="_blank" class="nav-cta">ipsiai.com →</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <canvas id="waveCanvas"></canvas>
+  <!-- 좌하단 HUD -->
+  <div class="coord-hud">
+    <div class="hud-title">WAVE COORDINATE ENGINE</div>
+    <div id="hudX">X : —</div>
+    <div id="hudZ">Z : —</div>
+    <div id="hudY">H : —</div>
+  </div>
+  <div class="wave-live">3D GRID · LIVE</div>
+
+  <div class="hero-content">
+  <div class="hero-kicker">서울대 합격 비결 심층 분석 시리즈 · 2025학년도</div>
+  <h1 class="hero-title">
+    합격생들의 이야기를<br>
+    <span class="glow">데이터로 해부하다</span>
+  </h1>
+  <p class="hero-sub">
+    서울대 수시 합격생 12명의 실제 학생부를 분석했습니다.<br>
+    5편의 심층 보고서로 서울대 학종의 본질을 완전히 밝힙니다.
+  </p>
+  <div class="theme-row">
+    <span class="tpill">⭐ 황지민 · 인문계열</span>
+    <span class="tpill">🌱 식물생산과학부</span>
+    <span class="tpill">🔗 자유전공학부</span>
+    <span class="tpill">🧭 지리학과</span>
+    <span class="tpill">📊 합격생 비교분석</span>
+  </div>
+  <div class="cta-row">
+    <a href="#reports" class="btn pri">📂 보고서 전체 보기</a>
+    <a href="서울대_합격생_비교분석.html" class="btn sec">📊 비교분석 대시보드 →</a>
+  </div>
+  </div><!-- /hero-content -->
+  <div class="hero-scroll">SCROLL</div>
+</div>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="st"><span class="sn" data-n="5">5</span><div class="sl">심층 분석 보고서</div></div>
+    <div class="st"><span class="sn" data-n="12">12</span><div class="sl">합격생 분석</div></div>
+    <div class="st"><span class="sn" data-n="5">5</span><div class="sl">서울대 합격 학과</div></div>
+    <div class="st"><span class="sn" data-n="3">3</span><div class="sl">핵심 합격 법칙</div></div>
+    <div class="st"><span class="sn" data-n="30" data-suffix="+">30+</span><div class="sl">년 컨설팅 경험</div></div>
+  </div>
+</div>
+
+<!-- 보고서 그리드 -->
+<div class="reports-wrap" id="reports">
+  <div class="sec-eye">Five Reports</div>
+  <h2 class="sec-ttl">5편의 심층 분석 보고서</h2>
+  <p class="sec-sub">각 보고서는 실제 합격생 데이터를 기반으로 내신·탐구활동·면접 전략을 완전히 분석합니다.</p>
+
+  <!-- ★ 상단 — 비교분석 (풀 너비) -->
+  <div class="grid-top">
+    <div class="rcard c5 card-compare" id="c5">
+      <div class="ch">
+        <div class="ch-glow"></div>
+        <span class="cn">Report 05 · 비교 분석 대시보드</span>
+        <span class="ci">📊</span>
+        <div class="ct">합격생 9인 vs 상담생 3인 비교</div>
+        <div class="cd">동일 학과 기준 · 내신 · 탐구 · 합격 요인 심층 비교</div>
+        <div class="cq">"탐구 주제의 방향성은 예상보다 넓은 학과 스펙트럼에 걸쳐 평가받는다"</div>
+      </div>
+      <div class="cb">
+        <ul class="cf">
+          <li><strong>컴퓨터공학부 vs 합격생 B·C</strong> — 구현 능력의 결정적 차별화</li>
+          <li><strong>스마트시스템과학과</strong> — 수학 1.80·과학 2.20에도 합격하는 탐구 깊이</li>
+          <li><strong>소비자학전공</strong> — 국어 2.20에도 합격하는 학과 특성 실증</li>
+          <li><strong>9인 공통 패턴</strong> — 서울대 합격을 결정짓는 핵심 3요소 도출</li>
+          <li><strong>학과 추천 vs 실제 합격</strong> — 기존 전략 재설계 전면 분석</li>
+        </ul>
+      </div>
+      <div class="cfooter">
+        <span class="ctag">허니컴 그리드 · 학생 탭 전환 · 컬러 코딩 성적표</span>
+        <a href="서울대_합격생_비교분석.html" class="clink" target="_blank">보고서 열기 →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ★ 하단 — 4개 2×2 -->
+  <div class="grid-bot">
+
+    <!-- 카드 1 — 황지민 -->
+    <div class="rcard c1" id="c1" style="animation-delay:.08s">
+      <div class="ch">
+        <div class="ch-glow"></div>
+        <span class="cn">Report 01 · 인문계열</span>
+        <span class="ci">⭐</span>
+        <div class="ct">황지민 합격 비결 분석</div>
+        <div class="cd">자아 성찰 중심의 자기주도적 학습 전략</div>
+        <div class="cq">"책에 찍힌 수많은 점이 언젠가 별이 된다"</div>
+      </div>
+      <div class="cb">
+        <ul class="cf">
+          <li><strong>6대 핵심 합격 비결</strong> — 성적 재정의부터 독서 토대까지</li>
+          <li><strong>교과-자아 연결 3단계</strong> — 김승옥 소설 '서 씨'로 확신 구축</li>
+          <li><strong>사제동행 토론 3단계</strong> — 텍스트 분석 → 사회 → 철학 심화</li>
+          <li><strong>전략적 면접 대비</strong> — 기록 복원 + 피벗 전략으로 서사 완성</li>
+        </ul>
+      </div>
+      <div class="cfooter">
+        <span class="ctag">밤하늘 별자리 · Canvas 별 애니메이션</span>
+        <a href="서울대_황지민_합격비결_분석보고서.html" class="clink" target="_blank">보고서 열기 →</a>
+      </div>
+    </div>
+
+    <!-- 카드 2 — 식물생산 -->
+    <div class="rcard c2" id="c2" style="animation-delay:.16s">
+      <div class="ch">
+        <div class="ch-glow"></div>
+        <span class="cn">Report 02 · 농업생명과학</span>
+        <span class="ci">🌱</span>
+        <div class="ct">식물생산과학부 합격</div>
+        <div class="cd">씨앗에서 숲으로 — 역량 강화 및 심리 극복</div>
+        <div class="cq">"대학은 꿈으로 가는 가장 빠른 경로일 뿐이다"</div>
+      </div>
+      <div class="cb">
+        <ul class="cf">
+          <li><strong>학문적 용기</strong> — 프랑스어 선택으로 진로 진정성 입증</li>
+          <li><strong>랩걸 × 극한 식물</strong> — 독서로 연구 타겟 구체화</li>
+          <li><strong>슬럼프 극복 3단계</strong> — 사회참조 → 자기참조 전환</li>
+          <li><strong>체계적 면접 준비</strong> — 3년 활동 데이터 폴더링 전략</li>
+        </ul>
+      </div>
+      <div class="cfooter">
+        <span class="ctag">덩굴 생장 · 꽃가루 · 잔디 애니메이션</span>
+        <a href="서울대_식물생산과학부_합격비결_분석보고서.html" class="clink" target="_blank">보고서 열기 →</a>
+      </div>
+    </div>
+
+    <!-- 카드 3 — 자유전공 -->
+    <div class="rcard c3" id="c3" style="animation-delay:.24s">
+      <div class="ch">
+        <div class="ch-glow"></div>
+        <span class="cn">Report 03 · 자유전공학부</span>
+        <span class="ci">🔗</span>
+        <div class="ct">자유전공학부 합격</div>
+        <div class="cd">'박스'를 넘어서는 주체적 탐구 전략</div>
+        <div class="cq">"어둠을 순순히 받아들이지 말라" — 딜런 토마스</div>
+      </div>
+      <div class="cb">
+        <ul class="cf">
+          <li><strong>7대 핵심 비결</strong> — 학제적 잠재력 + Academic Agility</li>
+          <li><strong>지역 소멸 3개년</strong> — 인식 → 심화 → 커뮤니티 모델 실행</li>
+          <li><strong>모의 UN 리더십</strong> — 난민 이슈 영국 대표단 발제</li>
+          <li><strong>경제 과목 선택</strong> — 그래프 직접 제작, 지식 도구화 입증</li>
+        </ul>
+      </div>
+      <div class="cfooter">
+        <span class="ctag">인디고 노드 네트워크 · 박스 탈출 버스트</span>
+        <a href="서울대_자유전공학부_합격비결_분석보고서.html" class="clink" target="_blank">보고서 열기 →</a>
+      </div>
+    </div>
+
+    <!-- 카드 4 — 지리학과 -->
+    <div class="rcard c4" id="c4" style="animation-delay:.32s">
+      <div class="ch">
+        <div class="ch-glow"></div>
+        <span class="cn">Report 04 · 지리학과</span>
+        <span class="ci">🧭</span>
+        <div class="ct">지리학과 합격 비결</div>
+        <div class="cd">나를 위한 공부 · 학업적 용기 · L-S Balance</div>
+        <div class="cq">"나를 위한 공부이기에 내가 노력해야 한다"</div>
+      </div>
+      <div class="cb">
+        <ul class="cf">
+          <li><strong>내적 동기 vs 외적 동기</strong> — 자아주도성이 만드는 학업 지속성</li>
+          <li><strong>교과서 목차 전략</strong> — 지적 호기심으로 소신 있는 과목 선택</li>
+          <li><strong>L-S Balance 2주 원칙</strong> — 집중력 밀도 극대화 시스템</li>
+          <li><strong>리더십의 학업 전이</strong> — 반장 경험 → 비판적 사고 → 메타 역량</li>
+        </ul>
+      </div>
+      <div class="cfooter">
+        <span class="ctag">등고선 · 좌표 격자 · 나침반 SVG</span>
+        <a href="서울대_지리학과_합격비결_분석보고서.html" class="clink" target="_blank">보고서 열기 →</a>
+      </div>
+    </div>
+
+  </div>
+</div><!-- /reports-wrap -->
+
+<!-- 핵심 인사이트 -->
+<div class="insight-section" id="insights">
+  <div class="insight-inner">
+    <div class="sec-eye" style="text-align:left">Core Insights — 5편 공통 결론</div>
+    <h2 class="sec-ttl" style="text-align:left;font-size:clamp(20px,3vw,36px)">서울대 합격의 3원칙</h2>
+    <p class="sec-sub" style="text-align:left;margin-left:0">분석한 12명이 공통으로 보여주는 핵심 패턴입니다.</p>
+    <div class="ins-grid">
+      <div class="ins-card">
+        <div class="ins-n">01</div>
+        <div class="ins-t">탐구의 구체성과 실증</div>
+        <div class="ins-b">물리엔진 코드, AI 비서, 자율주행 모형차, 소비자잉여 정적분, 경사각 탐지시스템 — <strong>12명 중 단 한 명도 막연한 관심 표명으로 합격한 사례가 없습니다.</strong></div>
+      </div>
+      <div class="ins-card">
+        <div class="ins-n">02</div>
+        <div class="ins-t">3년 성장 서사의 완결성</div>
+        <div class="ins-b">1학년의 시행착오가 3학년의 성과로 연결되는 스토리. <strong>성적이 좋은 학생이 아닌, 성장 과정이 읽히는 학생을 서울대가 선택합니다.</strong></div>
+      </div>
+      <div class="ins-card">
+        <div class="ins-n">03</div>
+        <div class="ins-t">단일 교과 약점 극복 가능</div>
+        <div class="ins-b">국어 2.20에도 소비자학전공 합격, 수학 1.80에도 스마트시스템 합격. <strong>전공 적합 탐구의 깊이와 3년 성장 서사로 충분히 극복됩니다.</strong></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-wrap">
+  <div class="cta-eye">시대학원 AI입시연구소 · ipsiai.com</div>
+  <h2 class="cta-t">우리 학생의 합격 비결을<br>지금 바로 분석하세요</h2>
+  <p class="cta-s">30년 입시 컨설팅 경험과 AI 분석을 결합한 개인 맞춤 서울대 학종 전략 수립</p>
+  <div class="cta-row">
+    <a href="https://ipsiai.com" target="_blank" class="btn pri">ipsiai.com 바로가기 →</a>
+    <a href="서울대_합격생_비교분석.html" class="btn sec">📊 비교분석 시작</a>
+  </div>
+  <div class="cta-badges">
+    <span class="cbadge">고양시 화정동 시대학원</span>
+    <span class="cbadge">김휘창입시컨설팅</span>
+    <span class="cbadge">맥에듀테크</span>
+    <span class="cbadge">219개 대학 데이터베이스</span>
+    <span class="cbadge">30년 현장 경험</span>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="fb-n">시대학원 AI입시연구소</div>
+      <div class="fb-s">ipsiai.com · 김휘창입시컨설팅 · 맥에듀테크<br>고양시 화정동 · 화정역 인근</div>
+    </div>
+    <div class="fl">
+      <h4>분석 보고서</h4>
+      <a href="서울대_합격생_비교분석.html">합격생 9인 비교분석 (★)</a>
+      <a href="서울대_황지민_합격비결_분석보고서.html">황지민 — 인문계열</a>
+      <a href="서울대_식물생산과학부_합격비결_분석보고서.html">식물생산과학부</a>
+      <a href="서울대_자유전공학부_합격비결_분석보고서.html">자유전공학부</a>
+      <a href="서울대_지리학과_합격비결_분석보고서.html">지리학과</a>
+    </div>
+    <div class="fl">
+      <h4>주요 서비스</h4>
+      <a href="https://ipsiai.com" target="_blank">AI 입시 연구소</a>
+      <a href="#">정시의맥 · 수시의맥</a>
+      <a href="#">219개 대학 분석 플랫폼</a>
+      <a href="#">학생부 AI 평가 시스템</a>
+    </div>
+  </div>
+  <div class="footer-copy">
+    <span>© 2025 시대학원 AI입시연구소 · 김휘창입시컨설팅 · 맥에듀테크</span>
+    <span>출처: 서울대 아로리 14호 '나도 입학사정관' | 내부 컨설팅 자료</span>
+  </div>
+</footer>
+
+<!-- Three.js r128 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+/* ══════════════════════════════════════════════════════════
+   3D 파동 격자망 — 5개 사인파 중첩
+   네이비(저점) → 청록(중간) → 금(고점) 버텍스 컬러
+   마우스 좌표 추적 (HUD + 트래커)
+══════════════════════════════════════════════════════════ */
+(function(){
+  const canvas = document.getElementById('waveCanvas');
+  const heroEl = canvas.parentElement;          // .hero div
+  const tracker= document.getElementById('coordTracker');
+  const hudX   = document.getElementById('hudX');
+  const hudZ   = document.getElementById('hudZ');
+  const hudY   = document.getElementById('hudY');
+
+  let W = heroEl.offsetWidth, H = heroEl.offsetHeight;
+
+  /* ── renderer ── */
+  const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setClearColor(0x000000, 0);
+  renderer.setSize(W, H);
+
+  /* ── scene + fog ── */
+  const scene  = new THREE.Scene();
+  scene.fog    = new THREE.FogExp2(0x04090F, 0.016);
+
+  /* ── camera ── */
+  const camera = new THREE.PerspectiveCamera(55, W/H, 0.1, 240);
+  camera.position.set(0, 5.5, 12);
+  camera.lookAt(0, 0, -8);
+
+  /* ── 파동 함수 (5개 사인파 중첩) ── */
+  function waveY(x, z, t){
+    return (
+      Math.sin(x*0.26 + t*0.42) * Math.cos(z*0.13 + t*0.25) * 1.70
+    + Math.sin(x*0.14 - t*0.30 + z*0.09) * 0.95
+    + Math.cos(x*0.38 + z*0.21 + t*0.18) * 0.72
+    + Math.sin((x+z)*0.17  + t*0.48) * 0.50
+    + Math.cos(x*0.07 + z*0.30 - t*0.14) * 0.38
+    );
+  }
+  const MAX_AMP = 4.0;
+
+  /* ── 그리드 정의 ── */
+  const COLS=38, ROWS=96, HW=24, HD=120;
+  const xLV=(ROWS+1)*COLS*2;
+  const zLV=(COLS+1)*ROWS*2;
+  const totalVerts = xLV + zLV;
+  const positions  = new Float32Array(totalVerts*3);
+  const colors     = new Float32Array(totalVerts*3);
+  const vC = new Uint8Array(totalVerts);   // col index
+  const vR = new Uint16Array(totalVerts);  // row index
+
+  /* 버텍스 인덱스 구성 */
+  let vi=0;
+  // X방향 세그먼트 (행 → 열 연결)
+  for(let r=0;r<=ROWS;r++) for(let c=0;c<COLS;c++){
+    vC[vi]=c;   vR[vi]=r; vi++;
+    vC[vi]=c+1; vR[vi]=r; vi++;
+  }
+  // Z방향 세그먼트 (열 → 행 연결)
+  for(let c=0;c<=COLS;c++) for(let r=0;r<ROWS;r++){
+    vC[vi]=c; vR[vi]=r;   vi++;
+    vC[vi]=c; vR[vi]=r+1; vi++;
+  }
+
+  const waveGeo  = new THREE.BufferGeometry();
+  const posAttr  = new THREE.BufferAttribute(positions,3);
+  const colAttr  = new THREE.BufferAttribute(colors,3);
+  posAttr.setUsage(THREE.DynamicDrawUsage);
+  colAttr.setUsage(THREE.DynamicDrawUsage);
+  waveGeo.setAttribute('position', posAttr);
+  waveGeo.setAttribute('color',    colAttr);
+  const waveMesh = new THREE.LineSegments(waveGeo,
+    new THREE.LineBasicMaterial({vertexColors:true, transparent:true, opacity:0.82}));
+  scene.add(waveMesh);
+
+  /* ── 색상 보간: 네이비 → 청록 → 금 ── */
+  const C_LOW  = [0.06, 0.15, 0.28];
+  const C_MID  = [0.12, 0.42, 0.60];
+  const C_HIGH = [0.88, 0.72, 0.20];
+  function setCol(i, t01){
+    let r,g,b;
+    if(t01<0.5){
+      const s=t01*2;
+      r=C_LOW[0]+(C_MID[0]-C_LOW[0])*s;
+      g=C_LOW[1]+(C_MID[1]-C_LOW[1])*s;
+      b=C_LOW[2]+(C_MID[2]-C_LOW[2])*s;
+    } else {
+      const s=(t01-0.5)*2;
+      r=C_MID[0]+(C_HIGH[0]-C_MID[0])*s;
+      g=C_MID[1]+(C_HIGH[1]-C_MID[1])*s;
+      b=C_MID[2]+(C_HIGH[2]-C_MID[2])*s;
+    }
+    colors[i*3]=r; colors[i*3+1]=g; colors[i*3+2]=b;
+  }
+
+  /* ── 마우스 좌표 추적 ── */
+  let mouseX=0, mouseZ=0;
+  const raycaster = new THREE.Raycaster();
+  const mouse2D   = new THREE.Vector2();
+  const groundPlane = new THREE.Plane(new THREE.Vector3(0,1,0), 0);
+  const hitPoint = new THREE.Vector3();
+  let   trackerVisible = false;
+
+  heroEl.addEventListener('mousemove', e=>{
+    const rect = heroEl.getBoundingClientRect();
+    const tx = e.clientX, ty = e.clientY;
+    // hero 영역 내 상대 좌표로 NDC 변환
+    mouse2D.x = ((tx - rect.left)/W)*2-1;
+    mouse2D.y = -((ty - rect.top)/H)*2+1;
+    raycaster.setFromCamera(mouse2D, camera);
+    raycaster.ray.intersectPlane(groundPlane, hitPoint);
+    if(hitPoint){
+      mouseX = hitPoint.x;
+      mouseZ = hitPoint.z;
+      const wh = waveY(mouseX, mouseZ, clock.getElapsedTime());
+
+      // HUD 업데이트
+      hudX.textContent = `X : ${mouseX.toFixed(2)}`;
+      hudZ.textContent = `Z : ${mouseZ.toFixed(2)}`;
+      hudY.textContent = `H : ${wh.toFixed(3)}`;
+
+      // 트래커 업데이트 (viewport 절대 좌표)
+      tracker.style.left = (tx+16)+'px';
+      tracker.style.top  = (ty-12)+'px';
+      tracker.textContent = `(${mouseX.toFixed(1)}, ${wh.toFixed(2)}, ${mouseZ.toFixed(1)})`;
+      tracker.style.opacity = '1';
+      trackerVisible = true;
+    }
+  });
+  heroEl.addEventListener('mouseleave',()=>{
+    tracker.style.opacity='0';
+    trackerVisible=false;
+    hudX.textContent='X : —';
+    hudZ.textContent='Z : —';
+    hudY.textContent='H : —';
+  });
+
+  /* ── 좌표 마커 (마우스 위치에 따라 움직이는 골드 점) ── */
+  const markerGeo = new THREE.SphereGeometry(0.12,8,8);
+  const markerMat = new THREE.MeshBasicMaterial({color:0xF5C842});
+  const marker    = new THREE.Mesh(markerGeo, markerMat);
+  marker.visible  = false;
+  scene.add(marker);
+
+  /* 마커 링 */
+  const ringGeo = new THREE.RingGeometry(0.22, 0.28, 24);
+  const ringMat = new THREE.MeshBasicMaterial({color:0xF5C842, side:THREE.DoubleSide, transparent:true, opacity:.55});
+  const ring    = new THREE.Mesh(ringGeo, ringMat);
+  ring.rotation.x = -Math.PI/2;
+  ring.visible = false;
+  scene.add(ring);
+
+  /* ── 천천히 카메라 공전 ── */
+  let orbitAngle = 0;
+
+  const clock = new THREE.Clock();
+
+  function animate(){
+    requestAnimationFrame(animate);
+    const t = clock.getElapsedTime();
+
+    /* 카메라 부드러운 공전 (마우스 없을 때) */
+    if(!trackerVisible){
+      orbitAngle += 0.0008;
+      camera.position.x = Math.sin(orbitAngle)*3.5;
+      camera.position.z = 12 + Math.cos(orbitAngle)*2;
+      camera.lookAt(0, 0, -8);
+    }
+
+    /* 파동 격자 업데이트 */
+    const dx=(HW*2)/COLS, dz=(HD*2)/ROWS;
+    for(let i=0;i<totalVerts;i++){
+      const c=vC[i], r=vR[i];
+      const wx=-HW+c*dx, wz=-HD+r*dz;
+      const wy = waveY(wx, wz, t);
+      positions[i*3]  = wx;
+      positions[i*3+1]= wy;
+      positions[i*3+2]= wz;
+      setCol(i, (wy+MAX_AMP)/(MAX_AMP*2));
+    }
+    posAttr.needsUpdate = true;
+    colAttr.needsUpdate = true;
+
+    /* 마커 이동 */
+    if(trackerVisible){
+      marker.visible = true;
+      ring.visible   = true;
+      const mh = waveY(mouseX, mouseZ, t);
+      marker.position.set(mouseX, mh+0.18, mouseZ);
+      ring.position.set(mouseX, mh+0.02, mouseZ);
+      ring.scale.setScalar(1+Math.sin(t*4)*0.08);
+    } else {
+      marker.visible = false;
+      ring.visible   = false;
+    }
+
+    renderer.render(scene, camera);
+  }
+  animate();
+
+  /* ── 리사이즈 ── */
+  window.addEventListener('resize',()=>{
+    W=heroEl.offsetWidth; H=heroEl.offsetHeight;
+    camera.aspect=W/H;
+    camera.updateProjectionMatrix();
+    renderer.setSize(W,H);
+  });
+})();
+
+/* ── 진행 바 ── */
+window.addEventListener('scroll',()=>{
+  const el=document.documentElement;
+  document.getElementById('prog').style.width=
+    (el.scrollTop/(el.scrollHeight-el.clientHeight)*100)+'%';
+});
+
+/* ── 카드 IntersectionObserver ── */
+const io=new IntersectionObserver(
+  entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');}),
+  {threshold:.07}
+);
+document.querySelectorAll('.rcard,.ins-card').forEach(el=>io.observe(el));
+
+/* ── 카운트업 ── */
+const soObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting)return;
+    e.target.querySelectorAll('.sn').forEach(el=>{
+      const n=parseInt(el.dataset.n), suf=el.dataset.suffix||'';
+      let cur=0; const step=n/40;
+      const tmr=setInterval(()=>{
+        cur=Math.min(cur+step,n);
+        el.textContent=Math.floor(cur)+(cur>=n?suf:'');
+        if(cur>=n)clearInterval(tmr);
+      },28);
+    });
+    soObs.unobserve(e.target);
+  });
+},{threshold:.5});
+const sb=document.querySelector('.stats-bar');
+if(sb)soObs.observe(sb);
+</script>
+</body>
+</html>

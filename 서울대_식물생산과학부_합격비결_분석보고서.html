@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>서울대 식물생산과학부 합격 비결 | 시대학원 AI입시연구소</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;600;700;900&family=Noto+Sans+KR:wght@300;400;500;700&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --forest:   #061510;
+  --forest2:  #0C2218;
+  --forest3:  #122B1E;
+  --sage:     #2D6A4F;
+  --sageL:    #52A87A;
+  --spring:   #95D5B2;
+  --springL:  #D8F3DC;
+  --amber:    #E09B3D;
+  --amberL:   #F5C842;
+  --ivory:    #F0EDE0;
+  --ivoryD:   #C4BFA8;
+  --muted:    #6B8A74;
+  --border:   rgba(82,168,122,0.18);
+  --red:      #C0392B;
+  --teal:     #0D7A8A;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--forest);
+  color: var(--ivory);
+  font-family: 'Noto Sans KR', sans-serif;
+  line-height: 1.75;
+  overflow-x: hidden;
+}
+
+/* ── 파티클 캔버스 ── */
+#leaffield {
+  position: fixed; inset: 0; z-index: 0;
+  pointer-events: none;
+}
+
+/* ── 진행 바 ── */
+#progress {
+  position: fixed; top: 0; left: 0; z-index: 200;
+  height: 3px; width: 0%;
+  background: linear-gradient(90deg, var(--sage), var(--spring), var(--amberL));
+  transition: width .1s;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 3rem; height: 64px;
+  background: rgba(6,21,16,0.9);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+.nav-logo {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 13px; font-weight: 600;
+  color: var(--spring); letter-spacing: .5px;
+  display: flex; align-items: center; gap: 8px;
+}
+.nav-logo::before { content: '🌱'; font-size: 16px; }
+.nav-links { display: flex; gap: 2rem; }
+.nav-links a {
+  font-size: 12px; color: var(--muted);
+  text-decoration: none; letter-spacing: .5px;
+  transition: color .2s;
+}
+.nav-links a:hover { color: var(--spring); }
+
+/* ── HERO ── */
+.hero {
+  position: relative; z-index: 1;
+  min-height: 100vh;
+  display: grid; grid-template-columns: 1fr 1fr;
+  align-items: center;
+  padding: 8rem 4rem 6rem;
+  gap: 4rem;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 70% at 80% 50%, rgba(45,106,79,0.35) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 10% 80%, rgba(149,213,178,0.12) 0%, transparent 50%);
+  pointer-events: none;
+}
+.hero-left { position: relative; z-index: 1; }
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: .5rem;
+  font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--sageL);
+  border: 1px solid rgba(82,168,122,0.35);
+  padding: 5px 14px; border-radius: 99px;
+  margin-bottom: 1.75rem;
+}
+.hero-kicker {
+  font-family: 'Noto Serif KR', serif;
+  font-size: clamp(13px,1.8vw,17px);
+  font-weight: 300; color: var(--ivoryD);
+  margin-bottom: .75rem;
+}
+.hero-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: clamp(32px,5.5vw,64px);
+  font-weight: 900; line-height: 1.15;
+  color: var(--ivory);
+  margin-bottom: 1.5rem;
+}
+.hero-title .green { color: var(--spring); }
+.hero-title .amber { color: var(--amberL); }
+.hero-quote {
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: clamp(14px,1.8vw,18px);
+  color: var(--sageL);
+  border-left: 2px solid var(--sage);
+  padding: 1rem 1.5rem;
+  margin: 1.75rem 0;
+  background: rgba(45,106,79,0.12);
+  border-radius: 0 10px 10px 0;
+  line-height: 1.7;
+}
+.hero-meta {
+  display: flex; gap: 1.25rem; flex-wrap: wrap; margin-top: 2rem;
+}
+.meta-chip {
+  font-size: 11px; padding: 5px 12px; border-radius: 99px;
+  background: rgba(82,168,122,0.12);
+  border: 1px solid var(--border);
+  color: var(--spring); letter-spacing: .5px;
+}
+
+/* ── 히어로 오른쪽: 식물 SVG ── */
+.hero-visual {
+  position: relative; z-index: 1;
+  display: flex; align-items: center; justify-content: center;
+}
+.plant-svg { width: 100%; max-width: 420px; animation: sway 6s ease-in-out infinite; }
+@keyframes sway {
+  0%,100% { transform: rotate(0deg) translateY(0); }
+  33%      { transform: rotate(1.5deg) translateY(-8px); }
+  66%      { transform: rotate(-1deg) translateY(-4px); }
+}
+
+/* ── 공통 섹션 ── */
+section {
+  position: relative; z-index: 1;
+  max-width: 1100px; margin: 0 auto;
+  padding: 6rem 2rem;
+}
+.sec-label {
+  font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+  color: var(--sageL); margin-bottom: .75rem;
+}
+.sec-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: clamp(22px,3.5vw,38px);
+  font-weight: 700; line-height: 1.3;
+  color: var(--ivory); margin-bottom: .75rem;
+}
+.sec-sub {
+  font-size: 14.5px; color: var(--muted);
+  max-width: 620px; line-height: 1.85;
+  margin-bottom: 3rem;
+}
+.divider {
+  height: 1px; margin-bottom: 3rem;
+  background: linear-gradient(90deg, var(--sage), transparent);
+}
+
+/* ── 풀 블리드 ── */
+.full-bleed {
+  width: 100%; max-width: none;
+  background: var(--forest2);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 5rem 2rem;
+}
+.fbi { max-width: 1100px; margin: 0 auto; }
+
+/* ── 6대 비결 카드 ── */
+.hex-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+.hex-card {
+  background: var(--forest2);
+  border: 1px solid var(--border);
+  border-radius: 16px; padding: 2rem 1.75rem;
+  position: relative; overflow: hidden;
+  transition: transform .3s, box-shadow .3s, border-color .3s;
+  opacity: 0; transform: translateY(28px);
+}
+.hex-card.vis { animation: rise .55s ease forwards; }
+.hex-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--sageL);
+  box-shadow: 0 20px 55px rgba(45,106,79,0.2);
+}
+.hex-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: linear-gradient(90deg, var(--sage), var(--spring));
+}
+.hex-card::after {
+  content: attr(data-n);
+  position: absolute; bottom: -12px; right: 8px;
+  font-family: 'Playfair Display', serif;
+  font-size: 72px; font-weight: 700;
+  color: rgba(82,168,122,0.07);
+  line-height: 1; pointer-events: none;
+}
+.hc-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 11px; font-weight: 700; letter-spacing: 3px;
+  color: var(--sage); text-transform: uppercase;
+  margin-bottom: .6rem;
+}
+.hc-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 17px; font-weight: 700;
+  color: var(--spring); margin-bottom: .75rem;
+}
+.hc-body { font-size: 13px; color: var(--ivoryD); line-height: 1.8; }
+
+/* ── 인용구 ── */
+.pull-quote {
+  border-left: 3px solid var(--sage);
+  padding: 1.5rem 2rem;
+  margin: 2.5rem 0;
+  background: rgba(45,106,79,0.1);
+  border-radius: 0 12px 12px 0;
+}
+.pull-quote p {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(15px,1.8vw,19px);
+  color: var(--spring); line-height: 1.8;
+  font-style: italic;
+}
+.pull-quote cite {
+  display: block; margin-top: .75rem;
+  font-size: 12px; color: var(--muted); font-style: normal; letter-spacing: .5px;
+}
+
+/* ── 미기재 활동 3열 ── */
+.tri-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 0; border: 1px solid var(--border); border-radius: 14px; overflow: hidden;
+}
+.tri-col {
+  padding: 1.75rem; border-right: 1px solid var(--border);
+  opacity: 0; transform: translateX(-15px);
+}
+.tri-col.vis { animation: slideR .5s ease forwards; }
+.tri-col:last-child { border-right: none; }
+.tri-col:nth-child(2) { animation-delay: .12s; }
+.tri-col:nth-child(3) { animation-delay: .24s; }
+.tri-head {
+  font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  color: var(--sageL); margin-bottom: 1rem;
+  padding-bottom: .75rem;
+  border-bottom: 1px solid var(--border);
+}
+.tri-title { font-size: 14px; font-weight: 700; color: var(--ivory); margin-bottom: .5rem; }
+.tri-body { font-size: 13px; color: var(--muted); line-height: 1.8; }
+
+/* ── 과목 비교표 ── */
+.lang-compare {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1.25rem; margin: 2rem 0;
+}
+.lang-card {
+  border-radius: 14px; padding: 2rem;
+  border: 1.5px solid;
+  opacity: 0; transform: scale(.97);
+}
+.lang-card.vis { animation: popIn .5s ease forwards; }
+.lang-card.reject {
+  border-color: rgba(150,80,60,0.35);
+  background: rgba(150,60,40,0.06);
+}
+.lang-card.choose {
+  border-color: rgba(82,168,122,0.4);
+  background: rgba(45,106,79,0.1);
+}
+.lang-badge {
+  display: inline-block; font-size: 11px; font-weight: 700;
+  padding: 3px 10px; border-radius: 99px; margin-bottom: 1rem;
+  letter-spacing: .5px;
+}
+.lang-badge.bad  { background: rgba(150,60,40,0.2); color: #E07060; }
+.lang-badge.good { background: rgba(45,106,79,0.25); color: var(--spring); }
+.lang-name {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 22px; font-weight: 700;
+  color: var(--ivory); margin-bottom: 1rem;
+}
+.lang-detail { font-size: 13px; color: var(--ivoryD); line-height: 1.8; }
+.lang-signal {
+  margin-top: 1rem; padding: .75rem 1rem;
+  border-radius: 8px; font-size: 12.5px; font-weight: 700;
+  line-height: 1.6;
+}
+.lang-signal.bad  { background: rgba(150,60,40,0.15); color: #E07060; }
+.lang-signal.good { background: rgba(45,106,79,0.2); color: var(--spring); }
+
+/* ── 독서 카드 ── */
+.book-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.book-card {
+  background: var(--forest3);
+  border: 1px solid var(--border);
+  border-radius: 14px; padding: 2rem;
+  display: grid; grid-template-columns: 60px 1fr; gap: 1.25rem;
+  opacity: 0; transform: translateY(18px);
+}
+.book-card.vis { animation: rise .5s ease forwards; }
+.book-spine {
+  width: 60px; border-radius: 6px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; align-self: start;
+  padding: 1.5rem .5rem;
+  writing-mode: vertical-rl;
+  font-family: 'Noto Serif KR', serif;
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--forest);
+}
+.book-spine.b1 { background: linear-gradient(180deg,#4A9E6A,#2D6A4F); color: var(--springL); }
+.book-spine.b2 { background: linear-gradient(180deg,#E09B3D,#A06020); color: #FFF3D0; }
+.book-title-main {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 16px; font-weight: 700;
+  color: var(--ivory); margin-bottom: .3rem;
+}
+.book-author { font-size: 12px; color: var(--muted); margin-bottom: .75rem; }
+.book-impact { font-size: 13px; color: var(--ivoryD); line-height: 1.8; }
+.book-tag {
+  display: inline-block; margin-top: .75rem;
+  font-size: 11px; padding: 3px 10px; border-radius: 99px;
+  background: rgba(82,168,122,0.15); color: var(--spring);
+  border: 1px solid var(--border);
+}
+
+/* ── 면접 전략 테이블 ── */
+.strat-table {
+  width: 100%; border-collapse: separate; border-spacing: 0;
+  font-size: 13.5px; border-radius: 12px; overflow: hidden;
+  border: 1px solid var(--border);
+}
+.strat-table th {
+  background: rgba(45,106,79,0.25);
+  color: var(--spring); font-size: 11px; font-weight: 700;
+  letter-spacing: 1px; text-transform: uppercase;
+  padding: 1rem 1.25rem; text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+.strat-table td {
+  padding: 1.1rem 1.25rem;
+  border-bottom: 1px solid rgba(82,168,122,0.07);
+  vertical-align: top; line-height: 1.75; color: var(--ivoryD);
+}
+.strat-table tr:last-child td { border-bottom: none; }
+.strat-table tr:hover td { background: rgba(45,106,79,0.06); }
+.strat-table td:first-child { color: var(--ivory); font-weight: 700; white-space: nowrap; }
+
+/* ── 슬럼프 극복 3단계 ── */
+.slump-steps {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 0; position: relative;
+  border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
+}
+.slump-step {
+  padding: 2.5rem 2rem;
+  border-right: 1px solid var(--border);
+  position: relative;
+  opacity: 0; transform: translateY(20px);
+}
+.slump-step.vis { animation: rise .5s ease forwards; }
+.slump-step:last-child { border-right: none; }
+.slump-step:nth-child(2) { animation-delay: .15s; }
+.slump-step:nth-child(3) { animation-delay: .3s; }
+.slump-step::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+}
+.slump-step.s1::before { background: var(--red); }
+.slump-step.s2::before { background: var(--amber); }
+.slump-step.s3::before { background: var(--sage); }
+.slump-num {
+  width: 52px; height: 52px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Playfair Display', serif;
+  font-size: 20px; font-weight: 700; margin-bottom: 1rem;
+}
+.slump-step.s1 .slump-num { background: rgba(192,57,43,0.15); color: #E07060; border: 1.5px solid rgba(192,57,43,0.3); }
+.slump-step.s2 .slump-num { background: rgba(224,155,61,0.15); color: var(--amber); border: 1.5px solid rgba(224,155,61,0.3); }
+.slump-step.s3 .slump-num { background: rgba(45,106,79,0.2); color: var(--spring); border: 1.5px solid var(--border); }
+.slump-stage { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: .5rem; }
+.slump-title { font-family: 'Noto Serif KR', serif; font-size: 17px; font-weight: 700; color: var(--ivory); margin-bottom: .5rem; }
+.slump-mech { font-size: 12.5px; color: var(--muted); margin-bottom: .75rem; font-style: italic; }
+.slump-body { font-size: 13px; color: var(--ivoryD); line-height: 1.8; }
+
+/* ── 3대 결론 축 ── */
+.pillar-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+.pillar-card {
+  background: var(--forest2);
+  border: 1px solid var(--border); border-radius: 16px;
+  padding: 2.5rem 2rem; text-align: center;
+  position: relative; overflow: hidden;
+  opacity: 0; transform: translateY(20px);
+}
+.pillar-card.vis { animation: rise .55s ease forwards; }
+.pillar-card:nth-child(2) { animation-delay: .15s; }
+.pillar-card:nth-child(3) { animation-delay: .3s; }
+.pillar-icon { font-size: 44px; margin-bottom: 1.25rem; display: block; }
+.pillar-num {
+  font-family: 'Playfair Display', serif; font-size: 11px;
+  font-weight: 700; letter-spacing: 3px; color: var(--sage);
+  text-transform: uppercase; margin-bottom: .5rem;
+}
+.pillar-title {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 17px; font-weight: 700; color: var(--spring);
+  margin-bottom: .75rem;
+}
+.pillar-body { font-size: 13px; color: var(--ivoryD); line-height: 1.8; }
+
+/* ── 포인트 박스 ── */
+.point-box {
+  background: rgba(45,106,79,0.08);
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--sage);
+  border-radius: 0 10px 10px 0;
+  padding: 1.25rem 1.75rem;
+  font-size: 13.5px; color: var(--ivory);
+  line-height: 1.85; margin: 2rem 0;
+}
+.point-box strong { color: var(--spring); }
+
+/* ── 최종 인용구 블록 ── */
+.final-quote {
+  text-align: center;
+  padding: 5rem 2rem;
+  position: relative; overflow: hidden;
+}
+.final-quote::before {
+  content: '❝';
+  position: absolute; top: 2rem; left: 50%; transform: translateX(-50%);
+  font-size: 200px; color: rgba(45,106,79,0.07);
+  font-family: 'Playfair Display', serif;
+  line-height: 1; pointer-events: none;
+}
+.fq-text {
+  position: relative;
+  font-family: 'Playfair Display', serif;
+  font-style: italic;
+  font-size: clamp(18px,2.5vw,28px);
+  color: var(--spring); line-height: 1.8;
+  max-width: 800px; margin: 0 auto 1.5rem;
+}
+.fq-cite { font-size: 13px; color: var(--muted); letter-spacing: 1px; }
+
+/* ── 푸터 ── */
+footer {
+  position: relative; z-index: 1;
+  border-top: 1px solid var(--border);
+  padding: 3rem 2rem; text-align: center;
+}
+.footer-icon { font-size: 32px; margin-bottom: .75rem; display: block; }
+.footer-brand {
+  font-family: 'Noto Serif KR', serif;
+  font-size: 15px; font-weight: 700; color: var(--spring); margin-bottom: .5rem;
+}
+.footer-sub { font-size: 12px; color: var(--muted); }
+
+/* ── 애니메이션 ── */
+@keyframes rise    { to { opacity:1; transform:translateY(0); } }
+@keyframes slideR  { to { opacity:1; transform:translateX(0); } }
+@keyframes popIn   { to { opacity:1; transform:scale(1); } }
+
+/* ── 반응형 ── */
+@media (max-width: 960px) {
+  .hero { grid-template-columns: 1fr; text-align: center; }
+  .hero-visual { display: none; }
+  .hex-grid { grid-template-columns: 1fr 1fr; }
+  .tri-grid, .lang-compare, .book-grid { grid-template-columns: 1fr; }
+  .slump-steps { grid-template-columns: 1fr; }
+  .slump-step { border-right: none; border-bottom: 1px solid var(--border); }
+  .pillar-grid { grid-template-columns: 1fr; }
+  nav .nav-links { display: none; }
+}
+@media (max-width: 600px) {
+  .hex-grid { grid-template-columns: 1fr; }
+  .hero { padding: 7rem 1.5rem 4rem; }
+}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+<canvas id="leaffield"></canvas>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">시대학원 AI입시연구소</div>
+  <div class="nav-links">
+    <a href="#secrets">핵심 비결</a>
+    <a href="#explore">자기주도</a>
+    <a href="#subject">교과 설계</a>
+    <a href="#reading">독서 전략</a>
+    <a href="#interview">면접</a>
+    <a href="#slump">슬럼프 극복</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">2025학년도 · 서울대학교 농업생명과학대학</div>
+    <p class="hero-kicker">식물생산과학부 합격 사례 심층 분석 보고서</p>
+    <h1 class="hero-title">
+      씨앗 하나가<br>
+      <span class="green">뿌리를 내리고</span><br>
+      <span class="amber">숲이 되다</span>
+    </h1>
+    <div class="hero-quote">
+      "대학은 꿈으로 가는 가장 빠른 경로일 뿐이다."<br>
+      역량 강화 및 심리 극복 전략 — 지적 내러티브의 완성
+    </div>
+    <div class="hero-meta">
+      <span class="meta-chip">🌿 자기주도 탐구</span>
+      <span class="meta-chip">🌏 아프리카 식량 문제</span>
+      <span class="meta-chip">📗 랩걸 × 극한 식물</span>
+      <span class="meta-chip">💡 사회참조 → 자기참조</span>
+    </div>
+  </div>
+
+  <!-- 식물 SVG 일러스트 -->
+  <div class="hero-visual">
+    <svg class="plant-svg" viewBox="0 0 400 500" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#7ED957" stop-opacity="0.15"/>
+          <stop offset="100%" stop-color="#7ED957" stop-opacity="0"/>
+        </radialGradient>
+      </defs>
+      <!-- 글로우 -->
+      <ellipse cx="200" cy="280" rx="160" ry="160" fill="url(#glow)"/>
+      <!-- 줄기 -->
+      <path d="M200 460 C200 380 185 320 195 240 C205 160 210 120 200 80" stroke="#2D6A4F" stroke-width="4" fill="none" stroke-linecap="round"/>
+      <!-- 뿌리들 -->
+      <path d="M200 460 C180 470 155 475 130 465" stroke="#1A4A2E" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <path d="M200 460 C210 475 230 480 260 470" stroke="#1A4A2E" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+      <path d="M200 455 C190 465 175 480 160 485" stroke="#1A4A2E" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <path d="M200 455 C215 468 240 478 255 490" stroke="#1A4A2E" stroke-width="2" fill="none" stroke-linecap="round"/>
+      <!-- 큰 잎 왼쪽 -->
+      <path d="M195 350 C170 310 120 290 90 260 C130 265 165 290 195 320" fill="#2D6A4F" opacity="0.85"/>
+      <path d="M195 350 C175 320 160 290 165 260 C170 275 178 305 195 330" fill="#3A8A60" opacity="0.6"/>
+      <!-- 큰 잎 오른쪽 -->
+      <path d="M205 310 C230 270 280 255 310 225 C270 235 235 265 205 295" fill="#2D6A4F" opacity="0.85"/>
+      <path d="M205 310 C225 280 238 250 235 220 C228 238 218 268 205 295" fill="#3A8A60" opacity="0.6"/>
+      <!-- 중간 잎 -->
+      <path d="M196 250 C165 218 125 210 95 185 C135 195 168 218 196 240" fill="#52A87A" opacity="0.8"/>
+      <path d="M204 230 C235 195 275 185 305 160 C265 175 232 198 204 222" fill="#52A87A" opacity="0.8"/>
+      <!-- 작은 잎 상단 -->
+      <path d="M197 185 C178 162 155 152 135 138 C158 146 178 162 198 175" fill="#7ED957" opacity="0.75"/>
+      <path d="M203 170 C222 148 248 140 268 126 C245 137 222 152 203 162" fill="#7ED957" opacity="0.75"/>
+      <!-- 꽃봉오리 -->
+      <ellipse cx="200" cy="78" rx="18" ry="24" fill="#95D5B2" opacity="0.9"/>
+      <ellipse cx="200" cy="72" rx="12" ry="16" fill="#D8F3DC" opacity="0.8"/>
+      <ellipse cx="200" cy="68" rx="7" ry="10" fill="#FFFFFF" opacity="0.7"/>
+      <!-- 작은 꽃들 -->
+      <ellipse cx="175" cy="95" rx="8" ry="11" fill="#95D5B2" opacity="0.7" transform="rotate(-15 175 95)"/>
+      <ellipse cx="225" cy="90" rx="8" ry="11" fill="#95D5B2" opacity="0.7" transform="rotate(15 225 90)"/>
+      <!-- 잎맥 -->
+      <path d="M195 350 C177 330 160 295 165 260" stroke="#52A87A" stroke-width="0.8" fill="none" opacity="0.5"/>
+      <path d="M205 310 C222 288 236 255 235 222" stroke="#52A87A" stroke-width="0.8" fill="none" opacity="0.5"/>
+      <!-- 땅 -->
+      <ellipse cx="200" cy="462" rx="90" ry="10" fill="#122B1E" opacity="0.6"/>
+    </svg>
+  </div>
+</div>
+
+<!-- ① 핵심 비결 6 -->
+<section id="secrets">
+  <div class="sec-label">Six Core Strategies</div>
+  <h2 class="sec-title">6가지 핵심 합격 비결</h2>
+  <p class="sec-sub">서울대 학종의 본질: '무엇을 했는가'보다 '왜 했는가, 어떻게 성장했는가'. 이 학생은 지적 내러티브의 완성으로 그 질문에 답했습니다.</p>
+  <div class="divider"></div>
+
+  <div class="hex-grid">
+    <div class="hex-card" data-n="①">
+      <div class="hc-num">Strategy 01</div>
+      <div class="hc-title">자기주도 탐구</div>
+      <div class="hc-body">기록 여부와 무관하게 탐구 과정 자체에서 지적 카타르시스를 추구 → 자기주도적 학습자 정체성 구축.</div>
+    </div>
+    <div class="hex-card" data-n="②" style="animation-delay:.1s">
+      <div class="hc-num">Strategy 02</div>
+      <div class="hc-title">학문적 용기</div>
+      <div class="hc-body">내신 불리 과목(프랑스어) 선택으로 진로 진정성 입증 → 성적 지향보다 학문적 소신 우선.</div>
+    </div>
+    <div class="hex-card" data-n="③" style="animation-delay:.2s">
+      <div class="hc-num">Strategy 03</div>
+      <div class="hc-title">독서 기반 탐구</div>
+      <div class="hc-body">『랩걸』→ 극한 환경 식물 연구 타겟 설정. 독서를 지적 닻(Intellectual Anchor)으로 활용.</div>
+    </div>
+    <div class="hex-card" data-n="④" style="animation-delay:.3s">
+      <div class="hc-num">Strategy 04</div>
+      <div class="hc-title">체계적 면접 준비</div>
+      <div class="hc-body">3년 활동 데이터 폴더링 + 철학 중심 면접 노트 → 짧은 기간 내 완벽 복기.</div>
+    </div>
+    <div class="hex-card" data-n="⑤" style="animation-delay:.4s">
+      <div class="hc-num">Strategy 05</div>
+      <div class="hc-title">자기 참조 회복</div>
+      <div class="hc-body">'사회 참조 불안'에서 '자기 참조 성장'으로 전환 → 2학년 슬럼프 극복 후 성적 반등.</div>
+    </div>
+    <div class="hex-card" data-n="⑥" style="animation-delay:.5s">
+      <div class="hc-num">Strategy 06</div>
+      <div class="hc-title">진정성 있는 인성</div>
+      <div class="hc-body">학급 회장 경험을 진솔하게 전달, 면접관과 정서적 유대 형성 → 완성형 인재 이미지 구축.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ② 자기주도 탐구 -->
+<div class="full-bleed" id="explore">
+  <div class="fbi">
+    <div class="sec-label">Self-Directed Exploration</div>
+    <h2 class="sec-title">자기주도적 탐구 역량</h2>
+    <p class="sec-sub">미기재 활동의 역량 발현: 생기부에 남지 않더라도 포기하지 않은 것들이 면접장에서 빛났습니다.</p>
+
+    <div class="tri-grid">
+      <div class="tri-col">
+        <div class="tri-head">참여 동기</div>
+        <div class="tri-title">기록 너머의 본질적 호기심</div>
+        <div class="tri-body">기록 여부와 무관한 본질적 호기심과 소통 욕구. 다각적 관점 수용 및 논리적 설득 역량 강화. '나'를 만드는 과정으로 인식.</div>
+      </div>
+      <div class="tri-col">
+        <div class="tri-head">성취 임팩트</div>
+        <div class="tri-title">무대 위에서 자아를 발견</div>
+        <div class="tri-body">반복적인 원고 작성 및 무대 발표 경험 축적. 구술 대응력과 비판적 사고력 제고. '글로 생각을 풀어내길 즐기는 사람'이라는 자아 발견.</div>
+      </div>
+      <div class="tri-col">
+        <div class="tri-head">전략적 의의</div>
+        <div class="tri-title">내면이 만든 진정한 경쟁력</div>
+        <div class="tri-body">주변의 회의적 시각(생기부 미반영)에 소신 대응. 면접 현장에서 유연한 상호작용의 토대 마련. 외부 평가보다 내적 성장을 우선하는 태도.</div>
+      </div>
+    </div>
+
+    <div class="pull-quote" style="margin-top:2.5rem">
+      <p>"기록에 남지 않아도 괜찮아. 이 경험이 나를 만들고 있으니까."</p>
+    </div>
+    <div class="point-box">
+      <strong>📌 컨설턴트 포인트:</strong> '기록되는 활동'과 '나를 만드는 활동'을 구분하되, 후자를 포기하지 않도록 지도하십시오. 진정한 역량은 기록 밖에서도 자라납니다.
+    </div>
+  </div>
+</div>
+
+<!-- ③ 교육과정 설계 -->
+<section id="subject">
+  <div class="sec-label">Curriculum Design</div>
+  <h2 class="sec-title">교육과정 설계 전략</h2>
+  <p class="sec-sub">과목 선택은 대학에서의 학업 적합성을 증명하는 리트머스 시험지입니다. 이 학생의 선택은 용기 그 자체였습니다.</p>
+  <div class="divider"></div>
+
+  <div class="lang-compare">
+    <div class="lang-card reject">
+      <div class="lang-badge bad">미선택 — 안전 선택</div>
+      <div class="lang-name">🇯🇵 일본어</div>
+      <div class="lang-detail">전교생의 60%가 선택한 주류 과목. 1등급 확보에 유리한 내신 안전지대. 하지만 성적 지향적(Grade-grubbing) 태도의 시그널.</div>
+      <div class="lang-signal bad">❌ 입학사정관 신호: 성적 지향적 태도 → 학문 진정성 약함</div>
+    </div>
+    <div class="lang-card choose" style="animation-delay:.15s">
+      <div class="lang-badge good">선택 — 학문적 용기</div>
+      <div class="lang-name">🇫🇷 프랑스어</div>
+      <div class="lang-detail">1등급 인원 단 3명의 고난도 선택. 아프리카 식량 문제 해결이라는 진로 비전과 직결. 위험을 감수한 소신 있는 결정.</div>
+      <div class="lang-signal good">✅ 입학사정관 신호: 학문적 진정성 + 위험 감수(Risk-taking) → 강력한 긍정 시그널</div>
+    </div>
+  </div>
+
+  <div class="point-box">
+    <strong>📌 컨설턴트 포인트:</strong> 과목 선택 상담 시 '등급 유불리'만 고려하지 마십시오. 학생의 진로 비전과 연결된 '소신 있는 선택'은 학종 평가에서 매우 강력한 긍정 시그널로 작용합니다.
+  </div>
+</section>
+
+<!-- ④ 독서 전략 -->
+<div class="full-bleed" id="reading">
+  <div class="fbi">
+    <div class="sec-label">Reading Strategy</div>
+    <h2 class="sec-title">독서 — 지적 닻(Intellectual Anchor)</h2>
+    <p class="sec-sub">독서는 서류 평가 요소를 넘어 학생의 가치관과 학업 태도를 지탱하는 뿌리입니다. 단 두 권의 책이 이 학생의 방향을 바꿨습니다.</p>
+
+    <div class="book-grid">
+      <div class="book-card">
+        <div class="book-spine b1">랩 걸</div>
+        <div>
+          <div class="book-title-main">랩걸 (Lab Girl)</div>
+          <div class="book-author">호프 자런 저</div>
+          <div class="book-impact">식물의 강인한 생명력, 특히 '선인장의 생명력'에 매료. 막연한 식물학자의 꿈이 '극한 환경 식물 연구'라는 구체적이고 심화된 학술적 타겟으로 좁혀졌다. 단순한 독서가 아닌 학문적 방향성 설정의 결정적 계기.</div>
+          <span class="book-tag">🌵 연구 타겟 구체화</span>
+        </div>
+      </div>
+      <div class="book-card" style="animation-delay:.15s">
+        <div class="book-spine b2">나는 나의 스무 살을</div>
+        <div>
+          <div class="book-title-main">나는 나의 스무 살을 가장 존중한다</div>
+          <div class="book-author">심리 회복 도서</div>
+          <div class="book-impact">2학년 슬럼프 시기, 이 책의 문구를 통해 심리적 재보정(Recalibration)을 이루어냈다. 현재의 고난을 미래의 자산으로 승화시키는 철학적 관점 획득. 독서를 통한 내면 강화 → 학습 회복력으로 직결.</div>
+          <span class="book-tag">💚 슬럼프 극복의 원천</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="point-box" style="margin-top:2rem">
+      <strong>📌 독서 지도 전략:</strong> 책 제목 나열보다 '이 책이 어떤 탐구로 이어졌는가'의 연결 고리를 기록하도록 지도하십시오. 독서→호기심→탐구→성장의 흐름이 학종의 핵심 평가 포인트입니다.
+    </div>
+  </div>
+</div>
+
+<!-- ⑤ 면접 대비 -->
+<section id="interview">
+  <div class="sec-label">Interview Preparation</div>
+  <h2 class="sec-title">실전 면접 준비 전략</h2>
+  <p class="sec-sub">수능 이후 촉박한 일정 속에서도 체계적인 데이터 관리와 정서적 태도 관리를 병행하여 완성된 면접을 만들었습니다.</p>
+  <div class="divider"></div>
+
+  <table class="strat-table">
+    <thead>
+      <tr>
+        <th>전략</th>
+        <th>핵심 방법</th>
+        <th>효과</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>데이터 폴더링</td>
+        <td>3년간의 활동을 실시간으로 폴더별로 분류 저장</td>
+        <td>수능 후 짧은 기간 내 3년치 내러티브 완벽 복기 가능</td>
+      </tr>
+      <tr>
+        <td>Finals-Interview Balance</td>
+        <td>수능 후에도 2학기 기말고사까지 최선을 다하는 성실함 유지</td>
+        <td>면접 준비 시기에도 학습 리듬 유지, 집중력 확보</td>
+      </tr>
+      <tr>
+        <td>면접 노트 기반 자기 객관화</td>
+        <td>과목별 예상 질문 도출 후 '본인의 철학' 정리 + 꼬리 질문 셀프 훈련</td>
+        <td>답변의 깊이 강화 및 돌발 질문 대응력 향상</td>
+      </tr>
+      <tr>
+        <td>인성 면접 진솔함</td>
+        <td>학급 회장 경험을 꾸밈없는 진솔함과 웃음으로 전달</td>
+        <td>평가자와 정서적 유대 형성 → 완성형 인재 이미지 확립</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="pull-quote" style="margin-top:2.5rem">
+    <p>"면접은 나를 평가하는 자리가 아니라, 나를 보여주는 무대다."</p>
+  </div>
+  <div class="point-box">
+    <strong>📌 면접 대비 핵심:</strong> '정답 찾기'가 아닌 '내 철학 보여주기'가 서울대 면접의 본질입니다. 평소부터 활동 데이터를 체계적으로 관리하도록 지도하십시오.
+  </div>
+</section>
+
+<!-- ⑥ 슬럼프 극복 -->
+<div class="full-bleed" id="slump">
+  <div class="fbi">
+    <div class="sec-label">Resilience Strategy</div>
+    <h2 class="sec-title">슬럼프 극복 — 사회 참조에서 자기 참조로</h2>
+    <p class="sec-sub">2학년 시기 수학 성적 하락과 활동에 대한 회의감. 그 위기를 극복하는 3단계 과정 자체가 합격의 결정적 요인이 되었습니다.</p>
+
+    <div class="slump-steps">
+      <div class="slump-step s1">
+        <div class="slump-num">1</div>
+        <div class="slump-stage">1단계 · 진단</div>
+        <div class="slump-title">사회 참조 불안 파악</div>
+        <div class="slump-mech">Social-Reference 불안: 타인과의 비교로 자신의 가치를 판단</div>
+        <div class="slump-body">자신의 불안 원인을 '사회 참조'로 명확히 진단하여 문제를 구조화합니다. 무엇이 흔들리는지 정확히 알아야 고칠 수 있습니다.</div>
+      </div>
+      <div class="slump-step s2">
+        <div class="slump-num">2</div>
+        <div class="slump-stage">2단계 · 전환</div>
+        <div class="slump-title">철학적 마인드셋 재정의</div>
+        <div class="slump-mech">'대학은 꿈으로 가는 경로'로 관점 전환</div>
+        <div class="slump-body">입시 압박감을 내려놓고 '하고 싶은 활동' 재개에 집중합니다. 결과가 아닌 과정 중심으로 인식을 전환합니다.</div>
+      </div>
+      <div class="slump-step s3">
+        <div class="slump-num">3</div>
+        <div class="slump-stage">3단계 · 반등</div>
+        <div class="slump-title">자기 참조 성장 실현</div>
+        <div class="slump-mech">Self-Reference 성장: 집착 내려놓기 → 성과 극대화</div>
+        <div class="slump-body">3학년 실험·독서 활동 재개 후 학습 효율 극대화. 역설적으로 집착을 버리자 성적이 반등했습니다.</div>
+      </div>
+    </div>
+
+    <div class="pull-quote" style="margin-top:2.5rem">
+      <p>"대학은 최종 목표가 아닌, 내 꿈으로 가는 가장 빠른 경로일 뿐이다."</p>
+    </div>
+    <div class="point-box">
+      <strong>📌 상담 전략:</strong> 성적 하락 학생 상담 시 '점수 회복'보다 '내재 동기 회복'을 먼저 다루십시오. 동기가 회복되면 성적은 자연스럽게 따라옵니다.
+    </div>
+  </div>
+</div>
+
+<!-- ⑦ 결론 3축 -->
+<section>
+  <div class="sec-label">Three Core Pillars</div>
+  <h2 class="sec-title">성공 요인의 세 가지 전략적 축</h2>
+  <div class="divider"></div>
+
+  <div class="pillar-grid">
+    <div class="pillar-card">
+      <span class="pillar-icon">🌱</span>
+      <div class="pillar-num">Pillar 01</div>
+      <div class="pillar-title">자기주도적 내재 동기</div>
+      <div class="pillar-body">기록 여부와 관계없이 탐구 과정 자체에서 지적 카타르시스를 찾는 태도. 진정한 씨앗은 보이지 않는 곳에서 싹을 틔웁니다.</div>
+    </div>
+    <div class="pillar-card">
+      <span class="pillar-icon">🌿</span>
+      <div class="pillar-num">Pillar 02</div>
+      <div class="pillar-title">전략적 학문 소신</div>
+      <div class="pillar-body">내신 등급의 유불리보다 학문적 정통성과 진로 연계성을 우선시하는 과감한 과목 선택. 뿌리가 깊어야 강풍에도 흔들리지 않습니다.</div>
+    </div>
+    <div class="pillar-card">
+      <span class="pillar-icon">🌳</span>
+      <div class="pillar-num">Pillar 03</div>
+      <div class="pillar-title">자기 참조적 회복 탄력성</div>
+      <div class="pillar-body">입시를 타인과의 경쟁이 아닌 '나를 찾아가는 과정'으로 재정의하는 철학적 마인드셋. 숲은 다른 나무를 이기려 하지 않습니다.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 최종 인용 -->
+<div class="final-quote" style="position:relative;z-index:1">
+  <div class="fq-text">
+    "성적표의 숫자보다 중요한 것은 그 숫자를 채우는 당신의 '이유'입니다.<br>
+    남들과 비교하며 불안해하기보다, 당신을 가슴 뛰게 하는 활동에 충실하십시오.<br>
+    대학은 점수 뒤에 숨겨진 당신의 진정성과 학문적 용기를 가장 먼저 발견할 것입니다."
+  </div>
+  <div class="fq-cite">— 시대학원 AI입시연구소 · 전문가 상담 핵심 문구</div>
+</div>
+
+<!-- 푸터 -->
+<footer>
+  <span class="footer-icon">🌿</span>
+  <div class="footer-brand">시대학원 AI입시연구소</div>
+  <div class="footer-sub">ipsiai.com | 김휘창입시컨설팅 | 맥에듀테크 | 시대학원 AI입시연구소</div>
+</footer>
+
+<script>
+/* ── 녹색 파티클 (잎/씨앗 부유) ── */
+(function(){
+  const canvas = document.getElementById('leaffield');
+  const ctx    = canvas.getContext('2d');
+  let particles = [], frame = 0;
+
+  function resize(){
+    canvas.width  = window.innerWidth;
+    canvas.height = window.innerHeight;
+    initParticles();
+  }
+
+  function initParticles(){
+    particles = [];
+    const n = Math.floor(canvas.width * canvas.height / 6000);
+    for(let i=0;i<n;i++){
+      const type = Math.random() < .65 ? 'dot' : Math.random() < .7 ? 'leaf' : 'seed';
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: type === 'dot' ? Math.random()*1.8+.5 : Math.random()*4+3,
+        type,
+        vx: (Math.random()-.5) * .18,
+        vy: -(Math.random() * .4 + .1),
+        angle: Math.random() * Math.PI * 2,
+        va: (Math.random()-.5) * .012,
+        phase: Math.random() * Math.PI * 2,
+        speed: Math.random() * .008 + .004,
+        opacity: Math.random() * .5 + .15,
+        color: Math.random() < .55
+          ? `rgba(${45+Math.floor(Math.random()*60)},${106+Math.floor(Math.random()*60)},${79+Math.floor(Math.random()*40)},`
+          : Math.random() < .5
+            ? `rgba(149,213,178,`
+            : `rgba(224,155,61,`,
+      });
+    }
+  }
+
+  function drawLeaf(x, y, r, angle, color, alpha){
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(angle);
+    ctx.globalAlpha = alpha;
+    ctx.fillStyle = color + alpha + ')';
+    ctx.beginPath();
+    ctx.ellipse(0, 0, r * .45, r, 0, 0, Math.PI * 2);
+    ctx.fill();
+    /* 잎맥 */
+    ctx.strokeStyle = color + (alpha * .4) + ')';
+    ctx.lineWidth = .5;
+    ctx.beginPath();
+    ctx.moveTo(0, -r); ctx.lineTo(0, r);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function drawSeed(x, y, r, angle, color, alpha){
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(angle);
+    ctx.globalAlpha = alpha;
+    ctx.fillStyle = color + alpha + ')';
+    ctx.beginPath();
+    ctx.arc(0, 0, r * .5, 0, Math.PI * 2);
+    ctx.fill();
+    /* 씨앗 꼬리 */
+    ctx.strokeStyle = color + (alpha * .5) + ')';
+    ctx.lineWidth = .8;
+    ctx.beginPath();
+    ctx.moveTo(0, r*.5);
+    ctx.quadraticCurveTo(r*.8, r*1.5, 0, r*2.5);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  function draw(){
+    frame++;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const t = frame * .016;
+
+    particles.forEach(p => {
+      /* 부유 움직임 */
+      p.x += p.vx + Math.sin(t * p.speed * 40 + p.phase) * .3;
+      p.y += p.vy;
+      p.angle += p.va;
+
+      /* 화면 밖으로 나가면 아래에서 재생성 */
+      if(p.y < -20){
+        p.y = canvas.height + 10;
+        p.x = Math.random() * canvas.width;
+      }
+      if(p.x < -20) p.x = canvas.width + 10;
+      if(p.x > canvas.width + 20) p.x = -10;
+
+      /* 트윙클 */
+      const twinkle = (Math.sin(t * 40 * p.speed + p.phase) + 1) / 2;
+      const alpha   = p.opacity * (.6 + twinkle * .4);
+
+      if(p.type === 'dot'){
+        /* 글로우 닷 */
+        const grad = ctx.createRadialGradient(p.x,p.y,0, p.x,p.y,p.r*3);
+        grad.addColorStop(0, p.color + alpha + ')');
+        grad.addColorStop(1, p.color + '0)');
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r*3, 0, Math.PI*2);
+        ctx.fillStyle = grad; ctx.fill();
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+        ctx.fillStyle = p.color + alpha + ')'; ctx.fill();
+      } else if(p.type === 'leaf'){
+        drawLeaf(p.x, p.y, p.r, p.angle, p.color, alpha);
+      } else {
+        drawSeed(p.x, p.y, p.r, p.angle, p.color, alpha);
+      }
+    });
+
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+  draw();
+})();
+
+/* ── 스크롤 진행 바 ── */
+window.addEventListener('scroll', () => {
+  const el = document.documentElement;
+  const pct = el.scrollTop / (el.scrollHeight - el.clientHeight) * 100;
+  document.getElementById('progress').style.width = pct + '%';
+});
+
+/* ── IntersectionObserver ── */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('vis'); });
+}, { threshold: .1 });
+
+document.querySelectorAll(
+  '.hex-card, .tri-col, .lang-card, .book-card, .slump-step, .pillar-card'
+).forEach(el => io.observe(el));
+</script>
+</body>
+</html>

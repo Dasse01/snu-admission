@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>서울대 자유전공학부 합격 비결 | 시대학원 AI입시연구소</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Noto+Serif+KR:wght@300;400;600;700;900&family=Noto+Sans+KR:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --ink:      #080C18;
+  --ink2:     #0D1425;
+  --ink3:     #131C30;
+  --indigo:   #4338CA;
+  --indigoL:  #6366F1;
+  --purple:   #7C3AED;
+  --purpleL:  #A78BFA;
+  --amber:    #D97706;
+  --amberL:   #FCD34D;
+  --amberBg:  #1C1408;
+  --ivory:    #F1EEE8;
+  --ivoryD:   #B8B2A0;
+  --muted:    #5A6480;
+  --border:   rgba(99,102,241,0.18);
+  --borderG:  rgba(252,211,77,0.2);
+  --red:      #DC2626;
+  --teal:     #0891B2;
+}
+
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior:smooth; }
+
+body {
+  background: var(--ink);
+  color: var(--ivory);
+  font-family: 'Noto Sans KR', sans-serif;
+  line-height: 1.75;
+  overflow-x: hidden;
+}
+
+/* ── 네트워크 캔버스 ── */
+#netfield {
+  position:fixed; inset:0; z-index:0;
+  pointer-events:none;
+}
+
+/* ── 진행 바 ── */
+#progress {
+  position:fixed; top:0; left:0; z-index:200;
+  height:3px; width:0%;
+  background:linear-gradient(90deg,var(--indigo),var(--purpleL),var(--amberL));
+  transition:width .1s;
+}
+
+/* ── 네비 ── */
+nav {
+  position:fixed; top:0; left:0; right:0; z-index:100;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:0 3rem; height:64px;
+  background:rgba(8,12,24,0.88);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo {
+  font-family:'Cormorant Garamond',serif;
+  font-size:15px; font-weight:600; font-style:italic;
+  color:var(--purpleL); letter-spacing:.5px;
+}
+.nav-links { display:flex; gap:2rem; }
+.nav-links a {
+  font-size:12px; color:var(--muted);
+  text-decoration:none; letter-spacing:.5px;
+  transition:color .2s;
+}
+.nav-links a:hover { color:var(--purpleL); }
+
+/* ── HERO ── */
+.hero {
+  position:relative; z-index:1;
+  min-height:100vh;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  text-align:center;
+  padding:9rem 2rem 6rem;
+  overflow:hidden;
+}
+.hero::before {
+  content:'';
+  position:absolute; inset:0;
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 45%, rgba(67,56,202,0.28) 0%, transparent 65%),
+    radial-gradient(ellipse 40% 35% at 20% 80%, rgba(124,58,237,0.15) 0%, transparent 55%),
+    radial-gradient(ellipse 30% 30% at 80% 20%, rgba(217,119,6,0.1) 0%, transparent 50%);
+  pointer-events:none;
+}
+/* 박스 파편 장식 */
+.hero::after {
+  content:'';
+  position:absolute;
+  top:15%; right:8%;
+  width:120px; height:120px;
+  border:1.5px solid rgba(99,102,241,0.2);
+  transform:rotate(15deg);
+  pointer-events:none;
+}
+.hero-tag {
+  display:inline-flex; align-items:center; gap:.5rem;
+  font-size:11px; letter-spacing:3px; text-transform:uppercase;
+  color:var(--amberL);
+  border:1px solid var(--borderG);
+  padding:5px 16px; border-radius:99px;
+  margin-bottom:2rem;
+  font-family:'DM Mono',monospace;
+}
+.hero-kicker {
+  font-family:'Noto Serif KR',serif;
+  font-size:clamp(13px,1.8vw,17px);
+  font-weight:300; color:var(--ivoryD);
+  margin-bottom:1rem;
+}
+.hero-title {
+  font-family:'Noto Serif KR',serif;
+  font-size:clamp(34px,6vw,72px);
+  font-weight:900; line-height:1.12;
+  color:var(--ivory); margin-bottom:1.25rem;
+}
+.hero-title .ind  { color:var(--purpleL); }
+.hero-title .amb  { color:var(--amberL); }
+.hero-dylan {
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-size:clamp(18px,2.8vw,28px);
+  color:rgba(167,139,250,0.75);
+  margin:1.75rem auto;
+  line-height:1.5;
+}
+.hero-dylan span { display:block; font-size:.65em; color:var(--muted); margin-top:.4rem; font-style:normal; font-family:'DM Mono',monospace; letter-spacing:2px; }
+.hero-badges { display:flex; gap:.75rem; flex-wrap:wrap; justify-content:center; margin-top:2rem; }
+.hero-badge {
+  font-size:11px; padding:5px 14px; border-radius:99px;
+  border:1px solid var(--border);
+  color:var(--purpleL); letter-spacing:.5px;
+  background:rgba(99,102,241,0.08);
+}
+/* 모서리 박스 파편들 */
+.box-frag {
+  position:absolute; border:1px solid;
+  pointer-events:none; z-index:0;
+}
+.box-frag-1 { width:80px; height:80px; top:18%; left:6%; border-color:rgba(99,102,241,0.15); transform:rotate(-8deg); }
+.box-frag-2 { width:50px; height:50px; bottom:22%; right:12%; border-color:rgba(252,211,77,0.12); transform:rotate(22deg); }
+.box-frag-3 { width:35px; height:35px; top:30%; left:15%; border-color:rgba(167,139,250,0.1); transform:rotate(5deg); }
+
+/* ── 공통 섹션 ── */
+section {
+  position:relative; z-index:1;
+  max-width:1120px; margin:0 auto;
+  padding:6rem 2rem;
+}
+.sec-label {
+  font-size:11px; letter-spacing:4px; text-transform:uppercase;
+  color:var(--indigoL); margin-bottom:.75rem;
+  font-family:'DM Mono',monospace;
+}
+.sec-title {
+  font-family:'Noto Serif KR',serif;
+  font-size:clamp(22px,3.5vw,40px);
+  font-weight:700; line-height:1.3;
+  color:var(--ivory); margin-bottom:.75rem;
+}
+.sec-sub {
+  font-size:14.5px; color:var(--muted);
+  max-width:640px; line-height:1.85;
+  margin-bottom:3rem;
+}
+.divider {
+  height:1px; margin-bottom:3rem;
+  background:linear-gradient(90deg,var(--indigo),transparent);
+}
+
+/* ── 풀 블리드 ── */
+.full-bleed {
+  width:100%; max-width:none;
+  background:var(--ink2);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+  padding:5rem 2rem;
+}
+.fbi { max-width:1120px; margin:0 auto; }
+
+/* ── 7대 비결 벤토 그리드 ── */
+.bento {
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  grid-template-rows:auto auto;
+  gap:1rem;
+}
+.bento-card {
+  background:var(--ink2);
+  border:1px solid var(--border);
+  border-radius:16px; padding:1.75rem;
+  position:relative; overflow:hidden;
+  transition:transform .3s,border-color .3s,box-shadow .3s;
+  opacity:0; transform:translateY(24px);
+}
+.bento-card.vis { animation:rise .55s ease forwards; }
+.bento-card:hover {
+  transform:translateY(-5px);
+  border-color:var(--indigoL);
+  box-shadow:0 18px 50px rgba(79,70,229,0.18);
+}
+.bento-card::before {
+  content:'';
+  position:absolute; top:0; left:0; right:0; height:3px;
+  background:linear-gradient(90deg,var(--indigo),var(--purpleL));
+}
+/* 1번 카드 넓게 */
+.bento-card.wide { grid-column:span 2; }
+/* 번호 워터마크 */
+.bento-card::after {
+  content:attr(data-n);
+  position:absolute; bottom:-8px; right:8px;
+  font-family:'Cormorant Garamond',serif;
+  font-size:64px; font-weight:700;
+  color:rgba(99,102,241,0.07);
+  line-height:1; pointer-events:none;
+}
+.bc-num {
+  font-family:'DM Mono',monospace;
+  font-size:10px; letter-spacing:3px;
+  color:var(--indigoL); margin-bottom:.5rem; text-transform:uppercase;
+}
+.bc-title {
+  font-family:'Noto Serif KR',serif;
+  font-size:16px; font-weight:700;
+  color:var(--purpleL); margin-bottom:.65rem;
+}
+.bc-body { font-size:12.5px; color:var(--ivoryD); line-height:1.8; }
+
+/* ── 비교 테이블 ── */
+.compare-wrap {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:0; border:1px solid var(--border);
+  border-radius:16px; overflow:hidden;
+}
+.compare-head {
+  padding:1rem 1.5rem;
+  font-size:12px; font-weight:700; letter-spacing:1px;
+  text-transform:uppercase; font-family:'DM Mono',monospace;
+}
+.compare-head.bad  { background:rgba(220,38,38,0.12); color:#F87171; border-right:1px solid var(--border); }
+.compare-head.good { background:rgba(67,56,202,0.15); color:var(--purpleL); }
+.compare-row {
+  display:grid; grid-template-columns:1fr 1fr;
+  border-top:1px solid rgba(99,102,241,0.08);
+}
+.compare-cell {
+  padding:1rem 1.5rem;
+  font-size:13px; line-height:1.75; color:var(--ivoryD);
+}
+.compare-cell.bad  { border-right:1px solid rgba(99,102,241,0.08); background:rgba(220,38,38,0.03); }
+.compare-cell.good { background:rgba(67,56,202,0.05); }
+.compare-cell strong { color:var(--ivory); }
+
+/* ── 모의 UN 단계 ── */
+.un-steps {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:1.25rem;
+}
+.un-step {
+  background:var(--ink3);
+  border:1px solid var(--border);
+  border-radius:14px; padding:2rem;
+  opacity:0; transform:translateX(-18px);
+}
+.un-step.vis { animation:slideR .5s ease forwards; }
+.un-step:nth-child(2) { animation-delay:.12s; }
+.un-step:nth-child(3) { animation-delay:.24s; }
+.un-num {
+  width:48px; height:48px; border-radius:12px;
+  background:linear-gradient(135deg,var(--indigo),var(--purple));
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Cormorant Garamond',serif;
+  font-size:22px; font-weight:700; color:var(--ivory);
+  margin-bottom:1rem;
+}
+.un-tag { font-size:11px; letter-spacing:2px; text-transform:uppercase; color:var(--indigoL); margin-bottom:.5rem; }
+.un-title { font-family:'Noto Serif KR',serif; font-size:16px; font-weight:700; color:var(--ivory); margin-bottom:.5rem; }
+.un-body { font-size:12.5px; color:var(--ivoryD); line-height:1.8; }
+
+/* ── 3개년 로드맵 ── */
+.roadmap {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:0; position:relative;
+}
+.roadmap::before {
+  content:'';
+  position:absolute; top:52px; left:16.5%; right:16.5%;
+  height:2px;
+  background:linear-gradient(90deg,var(--indigo),var(--purpleL),var(--amberL));
+}
+.rm-step {
+  display:flex; flex-direction:column; align-items:center;
+  text-align:center; padding:0 1.5rem;
+  opacity:0; transform:translateY(20px);
+}
+.rm-step.vis { animation:rise .55s ease forwards; }
+.rm-step:nth-child(2) { animation-delay:.15s; }
+.rm-step:nth-child(3) { animation-delay:.3s; }
+.rm-circle {
+  width:60px; height:60px; border-radius:50%;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  font-family:'DM Mono',monospace;
+  font-size:10px; font-weight:700;
+  margin-bottom:1.5rem;
+  position:relative; z-index:1;
+  border:2px solid;
+}
+.rm-step.y1 .rm-circle { background:rgba(99,102,241,0.15); border-color:var(--indigoL); color:var(--indigoL); }
+.rm-step.y2 .rm-circle { background:rgba(124,58,237,0.15); border-color:var(--purpleL); color:var(--purpleL); }
+.rm-step.y3 .rm-circle { background:rgba(217,119,6,0.15); border-color:var(--amberL); color:var(--amberL); }
+.rm-yr { font-size:13px; font-weight:700; display:block; }
+.rm-stage { font-size:10px; display:block; margin-top:1px; }
+.rm-title { font-family:'Noto Serif KR',serif; font-size:16px; font-weight:700; color:var(--ivory); margin-bottom:.5rem; }
+.rm-sub { font-size:11px; color:var(--indigoL); font-weight:700; text-transform:uppercase; letter-spacing:1px; margin-bottom:.5rem; }
+.rm-body { font-size:12.5px; color:var(--ivoryD); line-height:1.8; }
+.rm-arrow {
+  margin-top:1rem; padding:.6rem 1rem;
+  border-radius:8px; font-size:12px; font-weight:700;
+  display:inline-block;
+}
+.rm-step.y1 .rm-arrow { background:rgba(99,102,241,0.12); color:var(--indigoL); }
+.rm-step.y2 .rm-arrow { background:rgba(124,58,237,0.12); color:var(--purpleL); }
+.rm-step.y3 .rm-arrow { background:rgba(217,119,6,0.12); color:var(--amberL); }
+
+/* ── 지식 도구화 흐름 ── */
+.flow-line {
+  display:flex; align-items:center; gap:0;
+  margin:2.5rem 0; flex-wrap:wrap;
+}
+.flow-node {
+  padding:.75rem 1.5rem;
+  background:rgba(99,102,241,0.1);
+  border:1px solid var(--border);
+  border-radius:10px;
+  font-family:'Noto Serif KR',serif;
+  font-size:15px; font-weight:700; color:var(--purpleL);
+}
+.flow-arrow {
+  padding:0 .75rem; font-size:18px; color:var(--indigoL);
+}
+
+/* ── 면접 카드 그리드 ── */
+.interview-grid {
+  display:grid; grid-template-columns:repeat(2,1fr);
+  gap:1rem;
+}
+.iv-card {
+  background:var(--ink3);
+  border:1px solid var(--border);
+  border-radius:14px; padding:1.75rem;
+  display:grid; grid-template-columns:44px 1fr;
+  gap:1rem; align-items:start;
+  opacity:0; transform:translateY(18px);
+}
+.iv-card.vis { animation:rise .5s ease forwards; }
+.iv-icon {
+  width:44px; height:44px; border-radius:10px;
+  background:rgba(99,102,241,0.12);
+  border:1px solid var(--border);
+  display:flex; align-items:center; justify-content:center;
+  font-size:20px; flex-shrink:0;
+}
+.iv-label { font-size:10px; letter-spacing:2px; text-transform:uppercase; color:var(--indigoL); margin-bottom:.4rem; }
+.iv-title { font-size:14px; font-weight:700; color:var(--ivory); margin-bottom:.4rem; }
+.iv-body  { font-size:12px; color:var(--ivoryD); line-height:1.8; }
+.iv-effect{ font-size:11.5px; color:var(--muted); margin-top:.5rem; padding-top:.5rem; border-top:1px solid rgba(99,102,241,0.1); }
+
+/* ── 독서 테이블 ── */
+.book-table {
+  width:100%; border-collapse:separate; border-spacing:0;
+  border-radius:14px; overflow:hidden;
+  border:1px solid var(--border);
+}
+.book-table th {
+  background:rgba(67,56,202,0.2);
+  color:var(--purpleL); font-size:11px; font-weight:700;
+  letter-spacing:1px; text-transform:uppercase;
+  padding:1rem 1.25rem; text-align:left;
+  border-bottom:1px solid var(--border);
+  font-family:'DM Mono',monospace;
+}
+.book-table td {
+  padding:1.1rem 1.25rem;
+  border-bottom:1px solid rgba(99,102,241,0.07);
+  vertical-align:top; line-height:1.75; color:var(--ivoryD);
+}
+.book-table tr:last-child td { border-bottom:none; }
+.book-table tr:hover td { background:rgba(99,102,241,0.05); }
+.book-table td:first-child { color:var(--purpleL); font-weight:700; white-space:nowrap; }
+.book-table td:last-child { color:var(--muted); font-size:12.5px; }
+
+/* ── 3대 원칙 ── */
+.principles {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:1.5rem;
+}
+.pc-card {
+  padding:2.5rem 2rem;
+  border:1px solid var(--border);
+  border-radius:18px; position:relative; overflow:hidden;
+  background:var(--ink2);
+  opacity:0; transform:translateY(20px);
+}
+.pc-card.vis { animation:rise .55s ease forwards; }
+.pc-card:nth-child(2) { animation-delay:.15s; }
+.pc-card:nth-child(3) { animation-delay:.3s; }
+.pc-card::before {
+  content:'';
+  position:absolute; top:0; left:0; right:0; height:3px;
+}
+.pc-card:nth-child(1)::before { background:linear-gradient(90deg,var(--indigo),var(--indigoL)); }
+.pc-card:nth-child(2)::before { background:linear-gradient(90deg,var(--purple),var(--purpleL)); }
+.pc-card:nth-child(3)::before { background:linear-gradient(90deg,var(--amber),var(--amberL)); }
+.pc-n {
+  font-family:'Cormorant Garamond',serif;
+  font-size:56px; font-weight:700;
+  color:rgba(99,102,241,0.1);
+  line-height:1; margin-bottom:.5rem;
+}
+.pc-title { font-size:15px; font-weight:700; margin-bottom:.75rem; }
+.pc-card:nth-child(1) .pc-title { color:var(--indigoL); }
+.pc-card:nth-child(2) .pc-title { color:var(--purpleL); }
+.pc-card:nth-child(3) .pc-title { color:var(--amberL); }
+.pc-body { font-size:13px; color:var(--ivoryD); line-height:1.85; }
+
+/* ── 인용 블록 ── */
+.pull-quote {
+  border-left:3px solid var(--indigo);
+  padding:1.5rem 2rem;
+  margin:2.5rem 0;
+  background:rgba(67,56,202,0.08);
+  border-radius:0 12px 12px 0;
+}
+.pull-quote p {
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(16px,2vw,21px);
+  color:var(--purpleL); line-height:1.8; font-style:italic;
+}
+.pull-quote cite {
+  display:block; margin-top:.75rem;
+  font-size:12px; color:var(--muted);
+  font-style:normal; letter-spacing:.5px;
+  font-family:'DM Mono',monospace;
+}
+
+/* ── 포인트 박스 ── */
+.point-box {
+  background:rgba(67,56,202,0.07);
+  border:1px solid var(--border);
+  border-left:3px solid var(--indigo);
+  border-radius:0 10px 10px 0;
+  padding:1.25rem 1.75rem;
+  font-size:13.5px; color:var(--ivory);
+  line-height:1.85; margin:2rem 0;
+}
+.point-box strong { color:var(--purpleL); }
+
+/* ── 최종 인용 ── */
+.final-hero {
+  position:relative; z-index:1;
+  text-align:center; padding:7rem 2rem;
+  overflow:hidden;
+}
+.final-bg {
+  position:absolute; inset:0;
+  background:radial-gradient(ellipse 60% 60% at 50% 50%, rgba(67,56,202,0.2) 0%, transparent 70%);
+  pointer-events:none;
+}
+.final-dylan {
+  font-family:'Cormorant Garamond',serif;
+  font-style:italic;
+  font-size:clamp(22px,4vw,44px);
+  color:var(--purpleL); line-height:1.5;
+  max-width:820px; margin:0 auto 1rem;
+  position:relative;
+}
+.final-sub {
+  font-size:13px; color:var(--muted);
+  letter-spacing:1px; font-family:'DM Mono',monospace;
+}
+
+/* ── 푸터 ── */
+footer {
+  position:relative; z-index:1;
+  border-top:1px solid var(--border);
+  padding:3rem 2rem; text-align:center;
+}
+.footer-brand {
+  font-family:'Cormorant Garamond',serif;
+  font-size:17px; font-weight:600; font-style:italic;
+  color:var(--purpleL); margin-bottom:.5rem;
+}
+.footer-sub { font-size:12px; color:var(--muted); font-family:'DM Mono',monospace; }
+
+/* ── 애니메이션 ── */
+@keyframes rise   { to { opacity:1; transform:translateY(0); } }
+@keyframes slideR { to { opacity:1; transform:translateX(0); } }
+
+/* ── 반응형 ── */
+@media (max-width:960px) {
+  .bento { grid-template-columns:1fr 1fr; }
+  .bento-card.wide { grid-column:span 1; }
+  .un-steps,.roadmap,.principles { grid-template-columns:1fr; }
+  .roadmap::before { display:none; }
+  .compare-wrap,.interview-grid { grid-template-columns:1fr; }
+  .compare-row { grid-template-columns:1fr; }
+  .compare-cell.bad { border-right:none; border-bottom:1px solid rgba(99,102,241,0.08); }
+  nav .nav-links { display:none; }
+}
+@media (max-width:600px) {
+  .bento { grid-template-columns:1fr; }
+  .hero { padding:7rem 1.5rem 4rem; }
+}
+</style>
+</head>
+<body>
+
+<div id="progress"></div>
+<canvas id="netfield"></canvas>
+
+<!-- 박스 파편 장식 -->
+<div class="box-frag box-frag-1"></div>
+<div class="box-frag box-frag-2"></div>
+<div class="box-frag box-frag-3"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">시대학원 AI입시연구소</div>
+  <div class="nav-links">
+    <a href="#secrets">7대 비결</a>
+    <a href="#box">박스 탈출</a>
+    <a href="#un">모의 UN</a>
+    <a href="#roadmap">3개년</a>
+    <a href="#interview">면접</a>
+    <a href="#books">독서</a>
+    <a href="#conclusion">결론</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">2025학년도 · 서울대학교 자유전공학부</div>
+  <p class="hero-kicker">'박스'를 넘어서는 주체적 탐구 전략</p>
+  <h1 class="hero-title">
+    학문의 <span class="ind">경계</span>를<br>
+    스스로 <span class="amb">허물다</span>
+  </h1>
+  <div class="hero-dylan">
+    Do not go gentle into that good night.
+    <span>— 딜런 토마스 · "어둠을 순순히 받아들이지 말라"</span>
+  </div>
+  <div class="hero-badges">
+    <span class="hero-badge">학제적 잠재력</span>
+    <span class="hero-badge">Academic Agility</span>
+    <span class="hero-badge">수직적 확장 3개년</span>
+    <span class="hero-badge">지식의 도구화</span>
+    <span class="hero-badge">교육 가능성</span>
+  </div>
+</div>
+
+<!-- ① 7대 핵심 비결 -->
+<section id="secrets">
+  <div class="sec-label">Seven Core Strategies</div>
+  <h2 class="sec-title">7가지 핵심 합격 비결</h2>
+  <p class="sec-sub">'만들어진 생기부'보다 '스스로 확장하는 생기부'. 자유전공학부가 원하는 인재는 스스로 질문을 던지고 답을 찾아가는 탐구의 궤적을 가진 학생입니다.</p>
+  <div class="divider"></div>
+
+  <div class="bento">
+    <div class="bento-card wide" data-n="①">
+      <div class="bc-num">Strategy 01 — 핵심</div>
+      <div class="bc-title">학문적 기민성 (Academic Agility)</div>
+      <div class="bc-body">자유전공학부 핵심 선발 기준. 전공 경계를 허물고 새로운 가치를 창조하는 <strong>학제적 잠재력(Interdisciplinary Potential)</strong> + 변화하는 지식 체계에 능동적으로 대응하는 유연성. 단일 분야에 갇히지 않는 융합적 사고력의 증명.</div>
+    </div>
+    <div class="bento-card" data-n="②" style="animation-delay:.08s">
+      <div class="bc-num">Strategy 02</div>
+      <div class="bc-title">'박스' 탈출 전략</div>
+      <div class="bc-body">성적 불리에도 '경제' 과목 선택 → 물가·최저시급 상관관계 그래프 직접 제작 → 지식 도구화 능력 입증.</div>
+    </div>
+    <div class="bento-card" data-n="③" style="animation-delay:.16s">
+      <div class="bc-num">Strategy 03</div>
+      <div class="bc-title">교무실 압정 태도</div>
+      <div class="bc-body">교사와 깊이 있는 토론·질문 반복 → '능동적 학습자' 이미지 구축 → 학생부 전반에 일관성 확보.</div>
+    </div>
+    <div class="bento-card" data-n="④" style="animation-delay:.24s">
+      <div class="bc-num">Strategy 04</div>
+      <div class="bc-title">모의 UN 리더십</div>
+      <div class="bc-body">공동교육과정 국제정치 → 난민 이슈 영국 대표단 → 발제문 작성·리딩 → 문제 해결력 + 협업 역량.</div>
+    </div>
+    <div class="bento-card" data-n="⑤" style="animation-delay:.32s">
+      <div class="bc-num">Strategy 05</div>
+      <div class="bc-title">지역 소멸 3개년</div>
+      <div class="bc-body">1학년 인식 → 2학년 심화·현장 답사·세미나 → 3학년 커뮤니티 비즈니스 모델 실행. 수직적 확장.</div>
+    </div>
+    <div class="bento-card" data-n="⑥" style="animation-delay:.40s">
+      <div class="bc-num">Strategy 06</div>
+      <div class="bc-title">면접 대응 전략</div>
+      <div class="bc-body">수학: 힌트 활용·사고 정정 / 인문사회: 키워드 메모·Eye Contact·셀프 카메라 피드백.</div>
+    </div>
+    <div class="bento-card wide" data-n="⑦" style="animation-delay:.48s">
+      <div class="bc-num">Strategy 07 — 토대</div>
+      <div class="bc-title">고전 독서와 '철학함'의 구현</div>
+      <div class="bc-body">중학교부터 쌓아온 고전 독서 → '철학함(Doing Philosophy)'의 구현 → 현대 과제에 인문학적 깊이 부여. 독서를 통해 얻은 선조들의 지혜는 입시라는 불확실한 상황에서 <strong>주체적인 결정을 내릴 수 있게 돕는 이정표</strong>였습니다.</div>
+    </div>
+  </div>
+</section>
+
+<!-- ② 박스 탈출 -->
+<div class="full-bleed" id="box">
+  <div class="fbi">
+    <div class="sec-label">Breaking the Box</div>
+    <h2 class="sec-title">'박스'를 탈출하는 진로 탐구의 메커니즘</h2>
+    <p class="sec-sub">많은 학생이 성적이라는 '박스' 안에 갇혀 진로를 설정합니다. 이 학생은 그 틀을 능동적으로 깨뜨렸습니다.</p>
+
+    <div class="compare-wrap">
+      <div class="compare-head bad">박스형 사고 — 일반적 학생</div>
+      <div class="compare-head good">주체적 탐구 — 합격생 전략</div>
+      <div class="compare-row">
+        <div class="compare-cell bad"><strong>진로 설정</strong><br>성적에 맞춘 수동적 진로 설정</div>
+        <div class="compare-cell good"><strong>진로 설정</strong><br>학문적 호기심에 기반한 자기주도적 진로 탐구</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell bad"><strong>과목 선택</strong><br>내신 유리한 인기 과목 위주</div>
+        <div class="compare-cell good"><strong>과목 선택</strong><br>비인기 '경제' 선택 — 진로 연계 + 탐구 열정 입증</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell bad"><strong>학습 태도</strong><br>수동적 지식 수용, 교과서 범위 내 학습</div>
+        <div class="compare-cell good"><strong>학습 태도</strong><br>교사와 토론·질문 반복('교무실 압정') → 능동적 학습자</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell bad"><strong>지식 활용</strong><br>시험을 위한 암기 및 단편적 개념 이해</div>
+        <div class="compare-cell good"><strong>지식 활용</strong><br>물가·최저시급 상관관계 그래프 제작 → 지식 도구화</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell bad"><strong>탐구 방식</strong><br>단기 활동 나열, 학년별 주제 분산</div>
+        <div class="compare-cell good"><strong>탐구 방식</strong><br>지역 소멸 테마 3년 일관 심화 → 수직적 확장 로드맵</div>
+      </div>
+    </div>
+
+    <div class="pull-quote" style="margin-top:2.5rem">
+      <p>"교과서의 경제 개념을 그냥 외우지 않았다. 직접 그래프를 그려서 현실에 대입해 봤다."</p>
+    </div>
+
+    <div class="flow-line">
+      <div class="flow-node">경제 개념 학습</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">현실 데이터 수집</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">상관관계 그래프 제작</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node">지식 도구화 입증</div>
+    </div>
+
+    <div class="point-box">
+      <strong>📌 컨설턴트 포인트:</strong> 과목 선택 상담 시 '등급 유불리'를 넘어서십시오. 학생의 진로 호기심과 연결된 과목 선택 하나가 학생부 전체의 '진정성'을 담보하는 핵심 근거가 됩니다.
+    </div>
+  </div>
+</div>
+
+<!-- ③ 모의 UN -->
+<section id="un">
+  <div class="sec-label">Mock UN & Joint Curriculum</div>
+  <h2 class="sec-title">공동교육과정과 모의 UN</h2>
+  <p class="sec-sub">학교 내 교육과정의 한계를 공동교육과정으로 극복. 국제정치 과목에서의 모의 UN 활동은 지식의 외연을 넓히는 과정을 보여줍니다.</p>
+  <div class="divider"></div>
+
+  <div class="un-steps">
+    <div class="un-step">
+      <div class="un-num">1</div>
+      <div class="un-tag">상정 주제</div>
+      <div class="un-title">난민 수용 관련 이슈</div>
+      <div class="un-body">국제 사회의 복합적 이해관계 및 현황 파악 → 글로벌 문제의식 확보. 단순 국내 이슈를 넘어선 시야 확장의 첫 단계.</div>
+    </div>
+    <div class="un-step">
+      <div class="un-num">2</div>
+      <div class="un-tag">역할 수행</div>
+      <div class="un-title">🇬🇧 영국 대표단 참여</div>
+      <div class="un-body">국가별 특수한 입장 고려 → 다국적 이해관계 조율 역량 증명. 자신의 의견이 아닌 '영국의 입장'으로 논리를 구성하는 탈중심적 사고력.</div>
+    </div>
+    <div class="un-step">
+      <div class="un-num">3</div>
+      <div class="un-tag">결과 도출</div>
+      <div class="un-title">발제문 작성 및 리딩</div>
+      <div class="un-body">지구촌 연대 의식 함양 + 실천적 리더십. 추상적 참여가 아닌 구체적 결과물 도출로 '문제 해결 역량' 입증.</div>
+    </div>
+  </div>
+
+  <div class="point-box" style="margin-top:2.5rem">
+    <strong>📌 학생부 기재 포인트:</strong> 활동명과 참여 사실보다 '갈등 상황에서 어떻게 조율했는가', '어떤 근거로 주장했는가'를 구체적 에피소드로 기재할 때 '문제 해결 역량'이 빛납니다.
+  </div>
+</section>
+
+<!-- ④ 3개년 로드맵 -->
+<div class="full-bleed" id="roadmap">
+  <div class="fbi">
+    <div class="sec-label">Three-Year Vertical Expansion</div>
+    <h2 class="sec-title">지역 소멸 3개년 수직적 확장 로드맵</h2>
+    <p class="sec-sub">서울대 학종에서 가장 큰 무게감을 가지는 것은 하나의 주제가 학년이 올라갈수록 깊어지는 '수직적 확장(Vertical Expansion)'입니다.</p>
+
+    <div class="roadmap" style="margin:4rem 0 2rem;">
+      <div class="rm-step y1">
+        <div class="rm-circle">
+          <span class="rm-yr">1학년</span>
+          <span class="rm-stage">Awareness</span>
+        </div>
+        <div class="rm-sub">인식 단계</div>
+        <div class="rm-title">문제를 발견하다</div>
+        <div class="rm-body">지역 소멸 문제의 심각성 인지 및 기초 데이터 탐색. 문제 정의 능력 + 사회 현안에 대한 지적 민감성 증명.</div>
+        <div class="rm-arrow">문제 정의 능력</div>
+      </div>
+      <div class="rm-step y2">
+        <div class="rm-circle">
+          <span class="rm-yr">2학년</span>
+          <span class="rm-stage">Deepening</span>
+        </div>
+        <div class="rm-sub">심화 단계</div>
+        <div class="rm-title">현장에서 파고들다</div>
+        <div class="rm-body">국내외 성공적 브랜딩 사례 조사 + 현장 답사 + 전교생 대상 세미나 개최. 현장 연구 역량 + 지식 공유 리더십.</div>
+        <div class="rm-arrow">지식 공유 리더십</div>
+      </div>
+      <div class="rm-step y3">
+        <div class="rm-circle">
+          <span class="rm-yr">3학년</span>
+          <span class="rm-stage">Action</span>
+        </div>
+        <div class="rm-sub">실천 단계</div>
+        <div class="rm-title">모델로 실행하다</div>
+        <div class="rm-body">전문가·교사·학생 협업으로 커뮤니티 비즈니스 모델 설계·PPT·실행. 협업 역량 + 사회적 가치 창출.</div>
+        <div class="rm-arrow">실천하는 지성인</div>
+      </div>
+    </div>
+
+    <div class="flow-line" style="justify-content:center;">
+      <div class="flow-node" style="background:rgba(99,102,241,0.12);">탐구(Know)</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node" style="background:rgba(124,58,237,0.12);">통찰(Insight)</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node" style="background:rgba(167,139,250,0.12);">모델 설계(Design)</div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node" style="background:rgba(217,119,6,0.12);color:var(--amberL);">실행(Execute)</div>
+    </div>
+
+    <div class="point-box" style="margin-top:2rem">
+      <strong>📌 전략 포인트:</strong> 3년간 동일 주제를 심화한 학생을 발견했다면, 학년별로 '무엇이 달라졌는가'를 학생과 함께 정리하십시오. 그 변화가 곧 '수직적 확장'의 증거이자 학생부의 핵심 서사가 됩니다.
+    </div>
+  </div>
+</div>
+
+<!-- ⑤ 면접 전략 -->
+<section id="interview">
+  <div class="sec-label">Interview Strategy</div>
+  <h2 class="sec-title">제시문 기반 면접 대응 전략</h2>
+  <p class="sec-sub">면접은 '교수와의 소통'이자 '교육 가능성(Trainability)'을 평가하는 장입니다. 완벽한 답변이 아닌, 배움의 과정을 보여주는 것이 핵심입니다.</p>
+  <div class="divider"></div>
+
+  <div class="interview-grid">
+    <div class="iv-card">
+      <div class="iv-icon">🧮</div>
+      <div>
+        <div class="iv-label">수학 제시문</div>
+        <div class="iv-title">개념 복귀 전략</div>
+        <div class="iv-body">고난도 문제 → 고교 기본 개념으로 돌아가 실마리 탐색. 막혔을 때 포기하지 않고 기초로 돌아가는 태도.</div>
+        <div class="iv-effect">기초 탄탄함 + 당황하지 않는 문제 해결 태도 입증</div>
+      </div>
+    </div>
+    <div class="iv-card" style="animation-delay:.1s">
+      <div class="iv-icon">💡</div>
+      <div>
+        <div class="iv-label">수학 제시문</div>
+        <div class="iv-title">힌트 활용 · 사고 정정</div>
+        <div class="iv-body">교수 힌트를 빠르게 캐치 → 잘못된 논리 수정. 오류를 인정하고 배움을 수용하는 겸손한 지성.</div>
+        <div class="iv-effect">교육 가능성(Trainability) 증명 — 서울대가 원하는 인재상</div>
+      </div>
+    </div>
+    <div class="iv-card" style="animation-delay:.2s">
+      <div class="iv-icon">📝</div>
+      <div>
+        <div class="iv-label">인문·사회 제시문</div>
+        <div class="iv-title">키워드 메모 구조화</div>
+        <div class="iv-body">추상적 나열 지양 → 핵심 키워드 중심 답변 구조화. 논리를 먼저 정리하고 말로 풀어내는 역순 접근.</div>
+        <div class="iv-effect">명확한 논리 구조 + 간결한 커뮤니케이션 능력 발현</div>
+      </div>
+    </div>
+    <div class="iv-card" style="animation-delay:.3s">
+      <div class="iv-icon">👁</div>
+      <div>
+        <div class="iv-label">인문·사회 제시문</div>
+        <div class="iv-title">Eye Contact 전략</div>
+        <div class="iv-body">키워드 정리로 종이 읽기 최소화 → 면접관과 시선 교환. 준비된 자의 여유와 자신감 표현.</div>
+        <div class="iv-effect">자신감 있는 소통 + 전문성 이미지 구축</div>
+      </div>
+    </div>
+    <div class="iv-card" style="animation-delay:.4s;grid-column:span 2">
+      <div class="iv-icon">🎥</div>
+      <div>
+        <div class="iv-label">사전 준비</div>
+        <div class="iv-title">셀프 카메라 피드백 — 메타인지의 최고 수준 증명</div>
+        <div class="iv-body">카메라 촬영으로 비언어 표현·지시어 사용 습관 교정. "막혔을 때 포기하지 않고, 교수님의 힌트를 단서로 삼아 제 논리를 다시 조립했습니다." — 자신의 면접을 객관적으로 관찰하는 메타인지 능력의 실천적 표현.</div>
+        <div class="iv-effect">전문성 향상 + 무의식적 표현 오류 사전 제거 → 완성형 면접 구현</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="pull-quote" style="margin-top:2.5rem">
+    <p>"막혔을 때 포기하지 않고, 교수님의 힌트를 단서로 삼아 제 논리를 다시 조립했습니다."</p>
+  </div>
+  <div class="point-box">
+    <strong>📌 면접 지도 핵심:</strong> 모든 답을 알아야 좋은 면접이 아닙니다. '모르는 것을 어떻게 탐구해 나가는가'를 보여주는 것이 서울대가 원하는 '교육 가능성'의 핵심입니다.
+  </div>
+</section>
+
+<!-- ⑥ 독서와 철학함 -->
+<div class="full-bleed" id="books">
+  <div class="fbi">
+    <div class="sec-label">Reading & Doing Philosophy</div>
+    <h2 class="sec-title">독서와 '철학함'의 구현</h2>
+    <p class="sec-sub">독서는 단순한 기록이 아닌 '현명한 선택의 도구'였습니다. 고전 독서는 현대 사회의 문제 해결을 위한 통찰력의 기반이 되었습니다.</p>
+
+    <table class="book-table">
+      <thead>
+        <tr>
+          <th>독서의 역할</th>
+          <th>발현 방식</th>
+          <th>입시 전략적 효과</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>지식 확장의 토대</td>
+          <td>고전 → 현대 문제 연결, 인문학적 깊이 부여. 지역 소멸 탐구에 철학적 시각 적용.</td>
+          <td>학생부 탐구 활동의 '지적 깊이' 증명</td>
+        </tr>
+        <tr>
+          <td>철학함의 구현</td>
+          <td>스스로 질문 던지기 → 탐구 → 답 구성. '2차적 질문'을 만드는 능력.</td>
+          <td>자기주도성 + 지적 호기심 입증</td>
+        </tr>
+        <tr>
+          <td>심리적 이정표</td>
+          <td>불확실한 상황에서 주체적 결정의 근거 확보. 입시 압박에도 흔들리지 않는 내면.</td>
+          <td>면접 위기 상황에서의 심리적 안정감 유지</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="pull-quote" style="margin-top:2.5rem">
+      <p>"독서를 통해 얻은 선조들의 지혜는 입시라는 불확실한 상황에서 주체적인 결정을 내릴 수 있게 돕는 이정표였다."</p>
+    </div>
+    <div class="point-box">
+      <strong>📌 독서 지도 전략:</strong> 독서 목록 나열보다 '이 책이 어떤 탐구로 연결되었는가'의 흐름을 기록하도록 지도하십시오. 독서→질문→탐구→결론의 선순환이 학종의 핵심 평가 포인트입니다.
+    </div>
+  </div>
+</div>
+
+<!-- ⑦ 결론 -->
+<section id="conclusion">
+  <div class="sec-label">Three Core Principles</div>
+  <h2 class="sec-title">'주체성'과 '구체성'의 결합이 만든 합격</h2>
+  <div class="divider"></div>
+
+  <div class="principles">
+    <div class="pc-card">
+      <div class="pc-n">01</div>
+      <div class="pc-title">탐구의 수직적 확장</div>
+      <div class="pc-body">하나의 주제를 3년간 깊게 파고드는 일관성이 학종의 가장 강력한 차별화 포인트. 지역 소멸 테마가 인식→심화→실행으로 진화한 것이 그 증거입니다.</div>
+    </div>
+    <div class="pc-card">
+      <div class="pc-n">02</div>
+      <div class="pc-title">지식의 도구화</div>
+      <div class="pc-body">배운 것을 그래프·모델·세미나로 치환하는 '실천하는 지성인'의 태도. 경제 개념을 현실 데이터로 검증한 순간, 지식은 도구가 됩니다.</div>
+    </div>
+    <div class="pc-card">
+      <div class="pc-n">03</div>
+      <div class="pc-title">교육 가능성 증명</div>
+      <div class="pc-body">완벽한 답보다 오류를 인정하고 배움을 수용하는 겸손한 지성이 서울대가 원하는 인재. 면접에서 힌트를 받고 논리를 재조립한 그 순간이 바로 합격의 핵심이었습니다.</div>
+    </div>
+  </div>
+</section>
+
+<!-- 최종 인용 -->
+<div class="final-hero">
+  <div class="final-bg"></div>
+  <div class="final-dylan">
+    "어둠을 순순히 받아들이지 말라."<br>
+    기교보다는 정직한 탐구와<br>겸손한 최선이야말로<br>
+    서울대학교가 기다리는 진정한 인재의 모습입니다.
+  </div>
+  <div class="final-sub" style="margin-top:1.5rem;">— 딜런 토마스 × 시대학원 AI입시연구소</div>
+</div>
+
+<!-- 푸터 -->
+<footer>
+  <div class="footer-brand">시대학원 AI입시연구소</div>
+  <div class="footer-sub">ipsiai.com · 김휘창입시컨설팅 · 맥에듀테크 · 시대학원 AI입시연구소</div>
+</footer>
+
+<script>
+/* ════════════════════════════════════════════
+   인터디스시플리너리 네트워크 애니메이션
+   — 연결된 노드들이 이동하다 일부가 '박스'를 탈출하며
+     폭발적으로 확장, 다시 재연결되는 시스템
+════════════════════════════════════════════ */
+(function(){
+  const canvas = document.getElementById('netfield');
+  const ctx    = canvas.getContext('2d');
+  let W = 0, H = 0, frame = 0;
+  let nodes = [], bursts = [];
+
+  /* ── 노드 초기화 ── */
+  function mkNode(x, y){
+    const tier = Math.random();
+    return {
+      x:  x ?? Math.random()*W,
+      y:  y ?? Math.random()*H,
+      vx: (Math.random()-.5)*.55,
+      vy: (Math.random()-.5)*.55,
+      r:  tier<.7 ? 1.8+Math.random()*1.4 : 3+Math.random()*2.5,
+      tier,                            // 0~1: 작을수록 작은 노드
+      phase: Math.random()*Math.PI*2,
+      speed: .008+Math.random()*.012,
+      color: tier<.65
+        ? [99,102,241]                 // 인디고
+        : tier<.88
+          ? [167,139,250]              // 퍼플
+          : [252,211,77],              // 앰버 — '탈출' 노드
+      breaking: false,
+      breakVx: 0, breakVy: 0,
+      breakTimer: 0,
+      alpha: 0,
+    };
+  }
+
+  /* ── 버스트 파티클 ── */
+  function spawnBurst(x, y, color){
+    for(let i=0;i<18;i++){
+      const angle = Math.random()*Math.PI*2;
+      const spd   = 1.5+Math.random()*3.5;
+      bursts.push({
+        x, y,
+        vx: Math.cos(angle)*spd,
+        vy: Math.sin(angle)*spd,
+        r: .8+Math.random()*1.8,
+        alpha: .9,
+        color,
+        decay: .022+Math.random()*.018,
+      });
+    }
+  }
+
+  function init(){
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+    const n = Math.max(30, Math.floor(W*H/18000));
+    nodes = Array.from({length:n}, ()=>mkNode());
+    nodes.forEach(nd=>{ nd.alpha = Math.random()*.7+.2; });
+    bursts = [];
+    frame  = 0;
+  }
+
+  function loop(){
+    frame++;
+    ctx.clearRect(0, 0, W, H);
+    const t = frame*.016;
+
+    /* ── 노드 이동 ── */
+    nodes.forEach((nd, i)=>{
+      nd.alpha = Math.min(.85, nd.alpha + .012);
+
+      if(nd.breaking){
+        nd.x += nd.breakVx;
+        nd.y += nd.breakVy;
+        nd.breakVx *= .96;
+        nd.breakVy *= .96;
+        nd.breakTimer--;
+        if(nd.breakTimer<=0){
+          nd.breaking = false;
+          nd.vx = (Math.random()-.5)*.55;
+          nd.vy = (Math.random()-.5)*.55;
+          // 화면 밖이면 반대편으로
+          if(nd.x<-50) nd.x = W+30;
+          if(nd.x>W+50) nd.x = -30;
+          if(nd.y<-50) nd.y = H+30;
+          if(nd.y>H+50) nd.y = -30;
+        }
+      } else {
+        // 부드러운 sin 흔들림
+        nd.x += nd.vx + Math.sin(t*nd.speed*40+nd.phase)*.25;
+        nd.y += nd.vy + Math.cos(t*nd.speed*35+nd.phase)*.2;
+        // 경계 bounce
+        if(nd.x<0||nd.x>W) nd.vx*=-1;
+        if(nd.y<0||nd.y>H) nd.vy*=-1;
+        // '탈출' 확률 — 앰버 노드만
+        if(nd.color[0]===252 && Math.random()<.0004){
+          nd.breaking  = true;
+          nd.breakTimer= 90+Math.floor(Math.random()*60);
+          const angle  = Math.random()*Math.PI*2;
+          const power  = 4+Math.random()*5;
+          nd.breakVx   = Math.cos(angle)*power;
+          nd.breakVy   = Math.sin(angle)*power;
+          spawnBurst(nd.x, nd.y, nd.color);
+        }
+      }
+    });
+
+    /* ── 엣지 연결 ── */
+    const DIST_SQ = 160*160;
+    for(let i=0;i<nodes.length;i++){
+      for(let j=i+1;j<nodes.length;j++){
+        const dx = nodes[i].x - nodes[j].x;
+        const dy = nodes[i].y - nodes[j].y;
+        const d2 = dx*dx + dy*dy;
+        if(d2 > DIST_SQ) continue;
+        const ratio = 1 - d2/DIST_SQ;
+        const [r,g,b] = nodes[i].color;
+        ctx.beginPath();
+        ctx.moveTo(nodes[i].x, nodes[i].y);
+        ctx.lineTo(nodes[j].x, nodes[j].y);
+        ctx.strokeStyle = `rgba(${r},${g},${b},${ratio*.22})`;
+        ctx.lineWidth   = ratio*1.2;
+        ctx.stroke();
+      }
+    }
+
+    /* ── 노드 그리기 ── */
+    nodes.forEach(nd=>{
+      const twinkle = (Math.sin(t*nd.speed*60+nd.phase)+1)/2;
+      const a = nd.alpha*(nd.breaking ? .95 : .45+twinkle*.45);
+      const [r,g,b] = nd.color;
+
+      // 글로우
+      const gR = nd.r*(nd.breaking ? 9 : 5);
+      const gr = ctx.createRadialGradient(nd.x,nd.y,0, nd.x,nd.y,gR);
+      gr.addColorStop(0, `rgba(${r},${g},${b},${a*.6})`);
+      gr.addColorStop(1, `rgba(${r},${g},${b},0)`);
+      ctx.beginPath();
+      ctx.arc(nd.x,nd.y,gR,0,Math.PI*2);
+      ctx.fillStyle = gr; ctx.fill();
+
+      // 코어
+      ctx.beginPath();
+      ctx.arc(nd.x,nd.y,nd.r*(nd.breaking?1.8:1),0,Math.PI*2);
+      ctx.fillStyle = `rgba(${r},${g},${b},${a})`;
+      ctx.fill();
+    });
+
+    /* ── 버스트 파티클 ── */
+    for(let i=bursts.length-1;i>=0;i--){
+      const b = bursts[i];
+      b.x += b.vx; b.y += b.vy;
+      b.vx *= .93; b.vy *= .93;
+      b.alpha -= b.decay;
+      if(b.alpha<=0){ bursts.splice(i,1); continue; }
+      const [r,g,bC] = b.color;
+      ctx.beginPath();
+      ctx.arc(b.x,b.y,b.r,0,Math.PI*2);
+      ctx.fillStyle = `rgba(${r},${g},${bC},${b.alpha})`;
+      ctx.fill();
+    }
+
+    requestAnimationFrame(loop);
+  }
+
+  window.addEventListener('resize', init);
+  init();
+  requestAnimationFrame(loop);
+})();
+
+/* ── 진행 바 ── */
+window.addEventListener('scroll',()=>{
+  const el = document.documentElement;
+  document.getElementById('progress').style.width =
+    (el.scrollTop/(el.scrollHeight-el.clientHeight)*100)+'%';
+});
+
+/* ── IntersectionObserver ── */
+const io = new IntersectionObserver(
+  entries=>entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('vis'); }),
+  {threshold:.1}
+);
+document.querySelectorAll(
+  '.bento-card,.un-step,.rm-step,.iv-card,.pc-card'
+).forEach(el=>io.observe(el));
+</script>
+</body>
+</html>
